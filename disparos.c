@@ -33,7 +33,7 @@ if(tablero[letra][num] != '*' && tablero[letra][num] != 'T' && tablero[letra][nu
         tocado = 2;
         tablero[letra][num] = 'H';
         tablero_v[letra][num] = 'H';
-        //Bucle que convierta los tocados adyacentes en hundidos
+        //FALTA: Bucle que convierta los tocados adyacentes en hundidos
     }
     else
         tablero_v[letra][num] = 'T';
