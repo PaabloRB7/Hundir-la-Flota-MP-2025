@@ -1,7 +1,8 @@
 #ifndef Tablero
 #define Tablero
 
-typedef struct{
+#define TAM 10;
 
+void imprimirTableros(char [][TAM], char [][TAM]);
 
-
+#endif
