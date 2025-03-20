@@ -1,12 +1,18 @@
 #include <stdio.h>
-#include tablero.h
-#define TAM 10
+#include "Tablero.h"
+#include "barcos.h"
 
-void barcos()´{
+void barcos(){
     int aux=0;
-    menu_barcos()
+    menu_barcos();
     aux=seleccion_opcion(aux);
     switch_barcos(aux);
+}
+
+int seleccion_opcion(){
+    int seleccion;
+    scanf("%i",&seleccion);
+    return(seleccion);
 }
 
 void menu_barcos(){
@@ -46,13 +52,6 @@ void switch_barcos(int aux){
     }
 }
 
-void colocar_barcos(){
-    menu_colocaccion();
-    aux=seleccion_opcion(aux);
-    switch_colocacion(aux);
-    
-}
-
 void menu_colocaccion(){
     printf("Seleccione la orientacion del barco:\n");
     printf("1. Horizontal\n");
@@ -62,10 +61,15 @@ void menu_colocaccion(){
     printf("5. Salir\n");
 }
 
+void switch_colocacion(){
+    switch()
+}
 
 void portaaviones(){
     int vida=6;
     char nom='P';
+    menu_colocaccion();
+
 }
 
 void acorazado(){
