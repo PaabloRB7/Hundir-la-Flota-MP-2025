@@ -4,7 +4,7 @@
 #define TAM 10
 
 typedef struct {
-    char[20] nombre;
+    char nombre[20];
     int longitud;
     char tipo;
     int eje_y;
@@ -24,7 +24,10 @@ void crucero();
 void destructor();
 void fragata();
 void submarino();
-void colocar_barcos(char [][TAM],char );
+void inicializar_barcos(barco test[]);
+void colocar_barcos(char tablero[][TAM], barco test[]);
+void direccionar_barcos(barco test[], int num_barco, char tablero[][TAM]);
+void colocar_horizontal(barco test[],int num_barco,char tablero[][TAM]);
 int comprobar_casillas(char [][TAM],int,int);
 
 #endif
