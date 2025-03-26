@@ -53,6 +53,7 @@ void imprimirTableros(char flota[][TAM], char oponente[][TAM]) {
 }
 
 int main() {
+    // tablero[eje y][eje x]
     char flota_jug1[TAM][TAM];
     char oponente_jug1[TAM][TAM];
     char flota_jug2[TAM][TAM];
@@ -73,6 +74,7 @@ int main() {
 
         //tablero Jugador 2
         imprimirTableros(flota_jug2, oponente_jug2);
+
 
 
     return 0;

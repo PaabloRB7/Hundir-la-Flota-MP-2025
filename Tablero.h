@@ -1,7 +1,7 @@
 #ifndef Tablero
 #define Tablero
+#define TAM 10
 
-#define TAM 10;
 
 void imprimirTableros(char [][TAM], char [][TAM]);
 

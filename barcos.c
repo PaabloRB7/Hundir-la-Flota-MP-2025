@@ -2,12 +2,38 @@
 #include "Tablero.h"
 #include "barcos.h"
 
-void barcos(){
-    int aux=0;
-    menu_barcos();
-    aux=seleccion_opcion(aux);
-    switch_barcos(aux);
+#define TAM 10
+
+int main() {
+    char flota_jug1[TAM][TAM];
+    char oponente_jug1[TAM][TAM];
+    char flota_jug2[TAM][TAM];
+    char oponente_jug2[TAM][TAM];
+
+    //inicializar los tableros vacíos
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            flota_jug1[i][j] = ' ';
+            oponente_jug1[i][j] = ' ';
+            flota_jug2[i][j] = ' ';
+            oponente_jug2[i][j] = ' ';
+        }
+    }
+
+    //tablero Jugador 1
+    imprimirTableros(flota_jug1, oponente_jug1);
+
+    //tablero Jugador 2
+    imprimirTableros(flota_jug2, oponente_jug2);
+
 }
+
+//void barcos_principal(){
+//    int aux=0,a2;
+//    menu_barcos();
+//    aux=seleccion_opcion(a2);
+//    switch_barcos(aux);
+//}
 
 int seleccion_opcion(){
     int seleccion;
@@ -24,6 +50,8 @@ void menu_barcos(){
     printf("5. Fragata\n");
     printf("6. Submarino\n");
 }
+
+/*
 
 void switch_barcos(int aux){
     switch(aux){
@@ -47,22 +75,28 @@ void switch_barcos(int aux){
             break;
         default:
             printf("Opcion no valida\n");
-            barcos();
+            barcos_principal();
             break;
     }
 }
 
-void menu_colocaccion(){
+*/
+
+int menu_colocaccion(){
+    int op;
     printf("Seleccione la orientacion del barco:\n");
     printf("1. Horizontal\n");
     printf("2. Vertical\n");
-    printf("3. Diagonal\n");
-    printf("4. Regresar\n");
+    printf("3. Diagonal derecha\n");
+    printf("4. Diagonal izquierda\n");
     printf("5. Salir\n");
+    scanf("%i",&op);
+    return op;
 }
 
+/*
 void switch_colocacion(){
-    switch()
+
 }
 
 void portaaviones(){
@@ -96,3 +130,71 @@ void submarino(){
     int vida=1;
     char nom='S';
 }
+
+*/
+
+int comprobar_casillas(char tablero[][TAM],int ejey,int ejex){
+    if (tablero[ejey-1][ejex-1]=='X' || tablero[ejey-1][ejex]=='X' || tablero[ejey-1][ejex+1]=='X' || tablero[ejey][ejex-1]=='X' || tablero[ejey][ejex]=='X' || tablero[ejey][ejex+1]=='X' || tablero[ejey+1][ejex-1]=='X' || tablero[ejey+1][ejex]=='X' || tablero[ejey+1][ejex+1]=='X') {
+        return 1;       // si existe un barco en las casillas alrededores devuelve 1
+    }
+    return 0;
+}
+
+void colocar_barcos(char tablero[][TAM],char barco){
+
+    int i,j,ejex,ejey,op,comp;
+    printf("Indica la posicion inicial del barco: [Eje Y][Eje X]");
+    scanf("%i %i",&ejey,&ejex);
+
+    switch (barco) {
+        case 'S':
+            comp = comprobar_casillas(tablero,ejey,ejex);
+            if (comp == 1) {
+                printf("No es posible colocar el barco en esa posicion\n");
+                colocar_barcos(tablero,barco);
+            }
+            tablero[ejey][ejex]='X';
+        break;
+        case'F':
+            op = menu_colocaccion();
+            switch (op) {
+                case 1:
+                    for (i=0;i<2;i++){
+                        comp = comprobar_casillas(tablero,ejey,ejex+i);
+                        if (comp == 1) {
+                            printf("No es posible colocar el barco en esa posicion\n");
+                            colocar_barcos(tablero,barco);
+                        }
+                        tablero[ejey][ejex+i]='X';
+                    }
+                break;
+                case 2:
+                    for (i=0;i<2;i++){
+                        comp = comprobar_casillas(tablero,ejey+i,ejex);
+                        if (comp == 1) {
+                            printf("No es posible colocar el barco en esa posicion\n");
+                            colocar_barcos(tablero,barco);
+                        }
+                        tablero[ejey+i][ejex]='X';
+                    }
+                break;
+                case 3:
+                    for (i=0;i<2;i++){
+                        comp = comprobar_casillas(tablero,ejey+i,ejex+i);
+                        if (comp == 1) {
+                            printf("No es posible colocar el barco en esa posicion\n");
+                            colocar_barcos(tablero,barco);
+                        }
+                        tablero[ejey+i][ejex+i]='X';
+                    }
+                break;
+                default:
+                    printf("Opcion no valida\n");
+                break;
+            }
+        break;
+    }
+
+
+}
+
