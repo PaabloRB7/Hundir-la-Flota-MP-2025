@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <menu_principal.h>
+#include <string.h>
+#include "menu_principal.h"
 
 //Estructuras
 typedef struct{
@@ -8,7 +9,7 @@ char disparo[12];
 }jugador;
 
 //Prototipos
-void config()
+void config();
 void introducir_datos(); //Es funcional pero tiene mejoras planteadas
 void mostrar(); //Pendiente
 void borrar(); //Dudas sobre restablecer o borrar
@@ -16,11 +17,7 @@ void guardar(); //Pendiente
 void cargar(); //Pendiente
 
 int main(){
-
-
-
-
-
+config();
 
 }
 
@@ -93,11 +90,11 @@ void introducir_datos(){
             fflush(stdin);
             scanf("%c", &respuesta);
             if(respuesta == 's' || respuesta == 'n'){
-                bucle = 0
+                bucle = 0;
                 if(respuesta == 's')
-                    j1.disparo = 'manual';
+                    strcpy(j1.disparo, "manual");
                 else
-                    j1.disparo = 'automatico';
+                    strcpy(j1.disparo, "automatico");
             }
             else
                 printf("\nOpcion no valida\n");
@@ -111,11 +108,11 @@ void introducir_datos(){
             fflush(stdin);
             scanf("%c", &respuesta);
             if(respuesta == 's' || respuesta == 'n'){
-                bucle = 0
+                bucle = 0;
                 if(respuesta == 's')
-                    j2.disparo = 'manual';
+                    strcpy(j2.disparo, "manual");
                 else
-                    j2.disparo = 'automatico';
+                    strcpy(j1.disparo, "automatico");
             }
             else
                 printf("\nOpcion no valida\n");
