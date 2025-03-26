@@ -4,10 +4,12 @@
 #define TAM 10
 
 typedef struct {
+    char[20] nombre;
     int longitud;
     char tipo;
     int eje_y;
     int eje_x;
+    char orientacion;
 }barco;
 
 void barcos_principal();
