@@ -2,8 +2,8 @@
 #define N 9
 
 //Prototipos
-int disparo_manual(int tablero[][N], int tablero_v[][N]); //Letra y num se corresponden a la dirección del disparo y tablero al tablero del jugador al que dispara
-int disparo_automatico(int tablero[][N], int tablero_v[][N]);
+int disparo_manual(char tablero[][N], char tablero_v[][N]);
+int disparo_automatico(char tablero[][N], char tablero_v[][N]);
 int disparo(int fila, int columna, char tablero[][N],char tablero_v[][N]);
 
 //Main
@@ -43,7 +43,7 @@ else
 return tocado;
 }
 
-int disparo_manual(int tablero[][N], int tablero_v[][N]){
+int disparo_manual(char tablero[][N], char tablero_v[][N]){
 int fila, column, resultado;
 
 printf("\nIntroduce las coordenadas del disparo (separando la fila y columna por un espacio): ");
@@ -66,3 +66,14 @@ return resultado;
 
 int disparo_automatico(){
 }
+
+int tocado_o_hundido(char tablero, int fila, int columna, char barco){ //INCOMPLETO
+int i, j, hundido = 1;
+for(i = fila - 1;i <= fila + 1;i++)
+    for(j = columna -1;j <= columna + 1;j++)
+        if(i != fila || j != columna)
+            if(barco == )
+
+
+}
+
