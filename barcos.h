@@ -3,6 +3,13 @@
 
 #define TAM 10
 
+typedef struct {
+    int longitud;
+    char tipo;
+    int eje_y;
+    int eje_x;
+}barco;
+
 void barcos_principal();
 int seleccion_opcion();
 void menu_barcos();

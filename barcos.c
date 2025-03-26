@@ -10,6 +10,9 @@ int main() {
     char flota_jug2[TAM][TAM];
     char oponente_jug2[TAM][TAM];
 
+    barco test;
+    test.tipo = 'F';
+
     //inicializar los tableros vacíos
     for (int i = 0; i < TAM; i++) {
         for (int j = 0; j < TAM; j++) {
@@ -19,6 +22,8 @@ int main() {
             oponente_jug2[i][j] = ' ';
         }
     }
+
+    colocar_barcos(flota_jug1,test.tipo);
 
     //tablero Jugador 1
     imprimirTableros(flota_jug1, oponente_jug1);
