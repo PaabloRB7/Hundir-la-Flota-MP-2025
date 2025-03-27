@@ -50,32 +50,17 @@ void imprimirTableros(char flota[][TAM], char oponente[][TAM]) {
         printf("   \n");  // separacion entre tableros
 
     }
+    printf("   \n");
+
 }
 
-int main() {
-    // tablero[eje y][eje x]
-    char flota_jug1[TAM][TAM];
-    char oponente_jug1[TAM][TAM];
-    char flota_jug2[TAM][TAM];
-    char oponente_jug2[TAM][TAM];
+void inicializar_tablero(char tablero[][TAM]) {
+    int i, j;
 
-    //inicializar los tableros vacíos
-    for (int i = 0; i < TAM; i++) {
-        for (int j = 0; j < TAM; j++) {
-            flota_jug1[i][j] = ' ';
-            oponente_jug1[i][j] = ' ';
-            flota_jug2[i][j] = ' ';
-            oponente_jug2[i][j] = ' ';
+    for (i = 0; i < TAM; i++) {
+        for (j = 0; j < TAM; j++) {
+            tablero[i][j] = ' ';
         }
     }
-
-        //tablero Jugador 1
-        imprimirTableros(flota_jug1, oponente_jug1);
-
-        //tablero Jugador 2
-        imprimirTableros(flota_jug2, oponente_jug2);
-
-
-
-    return 0;
 }
+

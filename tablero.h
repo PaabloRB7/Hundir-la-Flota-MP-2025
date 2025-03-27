@@ -4,5 +4,6 @@
 
 
 void imprimirTableros(char [][TAM], char [][TAM]);
+void inicializar_tablero(char tablero[][TAM]);
 
 #endif

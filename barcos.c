@@ -1,35 +1,10 @@
 #include <stdio.h>
-#include "Tablero.h"
+#include "tablero.h"
 #include "barcos.h"
 #include <string.h>
 
+
 #define TAM 10
-
-int main() {
-    char flota_jug1[TAM][TAM];
-    char oponente_jug1[TAM][TAM];
-    char flota_jug2[TAM][TAM];
-    char oponente_jug2[TAM][TAM];
-
-
-    //inicializar los tableros vacíos
-    for (int i = 0; i < TAM; i++) {
-        for (int j = 0; j < TAM; j++) {
-            flota_jug1[i][j] = ' ';
-            oponente_jug1[i][j] = ' ';
-            flota_jug2[i][j] = ' ';
-            oponente_jug2[i][j] = ' ';
-        }
-    }
-
-
-    //tablero Jugador 1
-    imprimirTableros(flota_jug1, oponente_jug1);
-
-    //tablero Jugador 2
-    imprimirTableros(flota_jug2, oponente_jug2);
-
-}
 
 void inicializar_barcos(barco test[]){
     strcpy(test[0].nombre, "Submarino");
@@ -173,28 +148,42 @@ void submarino(){
 
 */
 
-int comprobar_casillas(char tablero[][TAM],int ejey,int ejex){
-    if (tablero[ejey-1][ejex-1]=='X' || tablero[ejey-1][ejex]=='X' || tablero[ejey-1][ejex+1]=='X' || tablero[ejey][ejex-1]=='X' || tablero[ejey][ejex]=='X' || tablero[ejey][ejex+1]=='X' || tablero[ejey+1][ejex-1]=='X' || tablero[ejey+1][ejex]=='X' || tablero[ejey+1][ejex+1]=='X') {
-        return 1;       // si existe un barco en las casillas alrededores devuelve 1
+int comprobar_casillas(char tablero[][TAM],int ejey,int ejex, barco barco[], int num_barco){
+
+    switch (barco[num_barco].orientacion) {
+        case 'H':
+            if (tablero[ejey-1][ejex-1]=='X' || tablero[ejey-1][ejex]=='X' || tablero[ejey-1][ejex+1]=='X' || tablero[ejey][ejex]=='X' || tablero[ejey][ejex+1]=='X' || tablero[ejey+1][ejex-1]=='X' || tablero[ejey+1][ejex]=='X' || tablero[ejey+1][ejex+1]=='X') {
+                return 1;       // si existe un barco en las casillas alrededores devuelve 1
+            }
+        //case 'V':
+        //    if (tablero[])
     }
+
     return 0;
 }
 
 void colocar_barcos(char tablero[][TAM], barco test[]){
 
-    int i,comp;
+    int i;
     
     
     for(i=0;i<5;i++){
-        printf("Indica la posicion inicial del barco %i,%s: [Eje Y][Eje X]\n",i,test[i].nombre);
-        scanf("%i %i",&test[i].eje_y,&test[i].eje_x);
-        printf("Indica la orientacion del barco %i,%s:\n",i,test[i].nombre);
-        do
-        {
-            scanf("%c",&test[i].orientacion);
-        } while (test[i].orientacion !='H' || test[i].orientacion !='V' || test[i].orientacion !='D');
-         
-        direccionar_barcos(test,i,tablero);
+        printf("Indica la posicion inicial del barco %i, %s (Longitud: %i) [Eje Y][Eje X]\n",i+1,test[i].nombre,test[i].longitud);
+        scanf("%i%i",&test[i].eje_y,&test[i].eje_x);
+
+        if (test[i].longitud == 1) {
+            tablero[test[i].eje_y][test[i].eje_x]='X';
+            imprimirTableros(tablero, tablero); //hay que cambiar para que muestre solo 1 tablero
+        }
+        else {
+            printf("Indica la orientacion del barco %i,%s:\n",i,test[i].nombre);
+            do
+            {
+                scanf("%c",&test[i].orientacion);
+            } while (test[i].orientacion !='H' && test[i].orientacion !='V' && test[i].orientacion !='D');
+
+            direccionar_barcos(test,i,tablero);
+        }
     }
 }
 
@@ -268,11 +257,15 @@ for (i=0;i<2;i++){
 void colocar_horizontal(barco test[],int num_barco,char tablero[][TAM]){
     int i,comp;
     for (i=0;i<test[num_barco].longitud;i++){
-        comp = comprobar_casillas(tablero,test[num_barco].eje_y,test[num_barco].eje_x+i);
+        comp = comprobar_casillas(tablero,test[num_barco].eje_y,test[num_barco].eje_x+i,test,num_barco);
         if (comp == 1) {
             printf("No es posible colocar el barco en esa posicion\n");
+            inicializar_tablero(tablero);
+            imprimirTableros(tablero, tablero); //hay que cambiar para que muestre solo 1 tablero
             colocar_barcos(tablero,test);
         }
         tablero[test[num_barco].eje_y][test[num_barco].eje_x+i]='X';
     }
+    imprimirTableros(tablero, tablero); //hay que cambiar para que muestre solo 1 tablero
+
 }
