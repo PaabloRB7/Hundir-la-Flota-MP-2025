@@ -1,10 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #define N 9
 
 //Prototipos
+int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N]);
 int disparo_manual(char tablero[][N], char tablero_v[][N]);
 int disparo_automatico(char tablero[][N], char tablero_v[][N]);
-int disparo(int fila, int columna, char tablero[][N],char tablero_v[][N]);
+int tocado_o_hundido(char tablero_v[][N], char tablero[][N], int fila, int columna, char barco);
+void hundido(char tablero_v[][N], char tablero[][N], int fila, int columna, char barco);
+void buscar_proa(int *fila, int *columna, char barco, char tablero[][N]);
 
 //Main
 int main(){
@@ -24,18 +29,8 @@ if(tablero[fila][columna] != '*' && tablero[fila][columna] != 'T' && tablero[fil
     tocado = 1;
     barco = tablero[fila][columna];
     tablero[fila][columna] = 'T';
-    for(i = 0;i <= N || hundido = 0;i++)          //Falta implementar las nuevas funciones de deteccion de hundidos
-       for(j = 0;j <= N || hundido = 0;j++)
-          if(barco == tablero[i][j])
-            hundido = 0;
-    if(hundido == 1){
-        tocado = 2;
-        tablero[fila][columna] = 'H';
-        tablero_v[fila][columna] = 'H';
-        //Falta implementar las nuevas funciones de marcado de barcos hundidos
-    }
-    else
-        tablero_v[fila][columna] = 'T';
+    buscar_proa(&fila, &columna, barco, tablero);
+    tocado = tocado + tocado_o_hundido(tablero_v, tablero, fila, columna, barco);
 }
 else
     tablero_v[fila][columna] = '*';
@@ -64,10 +59,54 @@ switch(resultado)
 return resultado;
 }
 
-int disparo_automatico(){
+int disparo_automatico(char tablero[][N], char tablero_v[][N]){
+int max, int min, int fila, int columna, i, j, barco_tocado, resultado = 0, repeticiones;
+barco_tocado = 0;
+srand(time(NULL));
+for(i = 0;i <= 9 && barco_tocado == 0;i++)
+    for(j=0;j <= 9 && barco_tocado == 0;j++)
+        if(tablero_v[i][j] == 'T'){
+            barco_tocado = 1;
+            do{
+            repeticiones++
+            if(repeticiones >= 10){
+                repeticiones = 0;
+                barco_tocado = 0;
+            }
+            min = i - 1;
+            max = i + 1;
+            fila = (rand() % (max - min + 1)) + min;
+            min = j - 1;
+            max = j + 1;
+            columna = (rand() % (max - min + 1)) + min;
+            }while(tablero_v[fila][columna] == 'T' || tablero_v[fila][columna] == '*');
+            if(barco_tocado == 1)
+               resultado = disparo(fila, columna, tablero, tablero_v);
+        }
+
+
+if(barco_tocado = 0){
+    min = 0;
+    max = N;
+    do{
+        fila = (rand() % (max - min + 1)) + min;
+        columna = (rand() % (max - min + 1)) + min;
+    }while(tablero_v[fila][columna] == 'T' || tablero_v[fila][columna] == '*');
+    resultado = disparo(fila, columna, tablero, tablero_v);
+}
+switch(resultado)
+ case 1:
+    printf("\nTocado!\n\n");
+    break;
+ case 2:
+    printf("\nHUNDIDO!!!\n\n");
+    break;
+ default:
+    printf("\nAgua...\n\n");
+
 }
 
-int tocado_o_hundido(char tablero[][N], int fila, int columna, char barco){ //INCOMPLETO
+int tocado_o_hundido(char tablero_v[][N], char tablero[][N], int fila, int columna, char barco){
 int i, j, hundido = 1, bucle = 0, nfila, ncolumna;
 fila = nfila;
 columna = ncolumna;
@@ -87,6 +126,10 @@ for(i = fila - 1;i <= fila + 1;i++)
             if(barco == tablero[i][j])
                 hundido = 0;
         }
+}
+if(hundido == 1){
+    buscar_proa(&fila, &columna, barco, tablero);
+    hundido(tablero_v, tablero, fila, columna, barco);
 }
 return hundido;
 }
