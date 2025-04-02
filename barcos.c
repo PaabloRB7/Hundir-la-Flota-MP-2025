@@ -173,7 +173,7 @@ void colocar_barcos(char tablero[][TAM], barco test[]){
 
         if (test[i].longitud == 1) {
             tablero[test[i].eje_y][test[i].eje_x]='X';
-            imprimirTableros(tablero, tablero); //hay que cambiar para que muestre solo 1 tablero
+            imprimirTablero(tablero);
         }
         else {
             printf("Indica la orientacion del barco %i,%s:\n",i,test[i].nombre);
@@ -193,7 +193,7 @@ void direccionar_barcos(barco test[], int num_barco, char tablero[][TAM]){
             if (tablero[test[num_barco].eje_y][test[num_barco].eje_x-1] =='X'){
                 printf("No es posible colocar el barco en esa posicion\n");
                 inicializar_tablero(tablero);
-                imprimirTableros(tablero, tablero); //hay que cambiar para que muestre solo 1 tablero
+                imprimirTablero(tablero);
                 colocar_barcos(tablero,test);
             }
             colocar_horizontal(test,num_barco,tablero);
@@ -267,11 +267,11 @@ void colocar_horizontal(barco test[],int num_barco,char tablero[][TAM]){
         if (comp == 1) {
             printf("No es posible colocar el barco en esa posicion\n");
             inicializar_tablero(tablero);
-            imprimirTableros(tablero, tablero); //hay que cambiar para que muestre solo 1 tablero
+            imprimirTablero(tablero);
             colocar_barcos(tablero,test);
         }
         tablero[test[num_barco].eje_y][test[num_barco].eje_x+i]='X';
     }
-    imprimirTableros(tablero, tablero); //hay que cambiar para que muestre solo 1 tablero
+    imprimirTablero(tablero);
 
 }

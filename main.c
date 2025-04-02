@@ -40,6 +40,7 @@ int main(){
     //tablero Jugador 2
     //imprimirTableros(flota_jug2, oponente_jug2);
 
+
     inicializar_barcos(barcos_jug1);
     inicializar_barcos(barcos_jug2);
 
