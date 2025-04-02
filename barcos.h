@@ -29,6 +29,8 @@ void colocar_barcos(char tablero[][TAM], barco test[]);
 void direccionar_barcos(barco test[], int num_barco, char tablero[][TAM]);
 void colocar_horizontal(barco test[],int num_barco,char tablero[][TAM]);
 void colocar_vertical(barco test[],int num_barco,char tablero[][TAM]);
+void colocar_diagonal_der(barco test[],int num_barco,char tablero[][TAM]);
+void colocar_diagonal_izq(barco test[],int num_barco,char tablero[][TAM]);
 int comprobar_casillas(char tablero[][TAM],int ejey,int ejex, barco barco[], int num_barco);
 
 #endif

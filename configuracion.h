@@ -7,7 +7,7 @@ char disparo[12];
 }jugador;
 
 //Prototipos
-void config()
+void config();
 void introducir_datos();
 void mostrar();
 void borrar();
