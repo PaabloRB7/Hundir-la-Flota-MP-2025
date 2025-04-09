@@ -88,7 +88,17 @@ void imprimirTablero(char flota[][TAM]) {
 
 }
 
-void inicializar_tablero(char tablero[][TAM]) {
+void inicializar_agua(char tablero[][TAM]) {
+    int i, j;
+
+    for (i = 0; i < TAM; i++) {
+        for (j = 0; j < TAM; j++) {
+            tablero[i][j] = '*';
+        }
+    }
+}
+
+void inicializar_espacio(char tablero[][TAM]) {
     int i, j;
 
     for (i = 0; i < TAM; i++) {

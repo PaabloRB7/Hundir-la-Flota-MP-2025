@@ -10,8 +10,8 @@ add_executable(Hundir_la_Flota_MP_2025
     barcos.h
     #configuracion.c
     #configuracion.h
-    #disparos.c
-    #disparos.h
+    disparos.c
+    disparos.h
     main.c
     #menu_principal.c
     #menu_principal.h

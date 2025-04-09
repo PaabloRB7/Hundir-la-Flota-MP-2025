@@ -2,6 +2,7 @@
 #include "menu_principal.h"
 #include "tablero.h"
 #include "barcos.h"
+#include "disparos.h"
 #include "configuracion.h"
 
 #define TAM 10
@@ -29,10 +30,10 @@ int main(){
     barco barcos_jug2[5];
 
     //inicializar los tableros vacíos
-    inicializar_tablero(flota_jug1);
-    inicializar_tablero(oponente_jug1);
-    inicializar_tablero(flota_jug2);
-    inicializar_tablero(oponente_jug2);
+    inicializar_espacio(flota_jug1);
+    inicializar_agua(oponente_jug1);
+    inicializar_espacio(flota_jug2);
+    inicializar_agua(oponente_jug2);
 
     //tablero Jugador 1
     //imprimirTableros(flota_jug1, oponente_jug1);
@@ -45,6 +46,9 @@ int main(){
     inicializar_barcos(barcos_jug2);
 
     colocar_barcos(flota_jug1, barcos_jug1);
+
+    disparo_manual(flota_jug1, oponente_jug1);
+
 
     return 0;
 }
