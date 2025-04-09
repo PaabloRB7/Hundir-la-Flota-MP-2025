@@ -17,7 +17,6 @@ void guardar(); //Pendiente
 void cargar(); //Pendiente
 
 int main(){
-config();
 
 }
 
@@ -137,13 +136,19 @@ void mostrar(){
 }
 
 void borrar(){
-//Dudas sobre restablecer o borrar
+    FILE *f = fopen("config.txt", "w");
+    if (f != NULL) {
+        fclose(f);
+        printf("\nConfiguracion borrada correctamente.\n");
+    } else {
+        printf("\nError al borrar la configuracion.\n");
+    }
 }
 
 void guardar(){
-//Pendiente por dudas
+//Pendiente
 }
 
 void cargar(){
-//Pendiente por dudas
+//Pendiente
 }
