@@ -150,6 +150,9 @@ void switch_jugar(int aux){
 }
 
 void jugar_partida(){
+
+    int i=1;
+
     printf("[En desarrollo]\n");
     // tablero[eje y][eje x]
     //falta crearla dinamicamente
@@ -168,11 +171,24 @@ void jugar_partida(){
     jugador jugador1;
     jugador jugador2;
 
-    //Test (hay que quitarlo)
-    jugador1.disparo = 'M';
-    jugador2.disparo = 'M';
-    strcpy(jugador1.nombre,"Jugador 1");
-    strcpy(jugador2.nombre,"Jugador 2");
+    // --- INICIALIZACIÓN DE JUGADORES Y ESTADÍSTICAS ---
+    strcpy(jugador1.nombre,"Jugador1");
+    jugador1.disparo = 'M'; // Ejemplo
+    jugador1.disparos_realizados = 0;
+    jugador1.disparos_agua = 0;
+    jugador1.casillas_tocadas = 0;
+    jugador1.casillas_hundidas = 0;
+    jugador1.barcos_hundidos = 0;
+    jugador1.ganador = 0;
+
+    strcpy(jugador2.nombre,"Jugador2");
+    jugador2.disparo = 'M'; // Ejemplo
+    jugador2.disparos_realizados = 0;
+    jugador2.disparos_agua = 0;
+    jugador2.casillas_tocadas = 0;
+    jugador2.casillas_hundidas = 0;
+    jugador2.barcos_hundidos = 0;
+    jugador2.ganador = 0;
 
     //inicializar los tableros vacíos
     inicializar_espacio(flota_jug1);
@@ -184,33 +200,56 @@ void jugar_partida(){
     inicializar_barcos(barcos_jug2);
 
     colocar_barcos(flota_jug1, barcos_jug1);
+    colocar_barcos(flota_jug2, barcos_jug2);
 
-    while (1) {
-        //Comienza el turno
-        realizar_disparo(jugador1, flota_jug1, oponente_jug1);
-        imprimirTableros(flota_jug1, oponente_jug1);
-        realizar_disparo(jugador2, flota_jug2, oponente_jug2);
-        imprimirTableros(flota_jug2, oponente_jug2);
+    int turnoJugador = 1; // 1 jugador1, 2 jugador2
+    int juegoTerminado = 0;
 
-        //Comprobar si hay ganador (queda por hacer)
-        break;
+
+    while (!juegoTerminado) {
+        printf("\n--- Turno de %s ---\n", (turnoJugador == 1) ? jugador1.nombre : jugador2.nombre);
+
+        if (turnoJugador == 1) {
+            imprimirTableros(flota_jug1, oponente_jug1);
+            realizar_disparo(jugador1, flota_jug2, oponente_jug1);
+            if (jugador1.barcos_hundidos == NUM_BARCOS) { //comprueba si ha ganado
+                jugador1.ganador = 1;
+                juegoTerminado = 1;
+                printf("\n¡¡¡ %s HA GANADO !!!\n", jugador1.nombre);
+            }
+            turnoJugador = 2;
+        } else {
+            imprimirTableros(flota_jug2, oponente_jug2);
+            realizar_disparo(jugador2, flota_jug1, oponente_jug2);
+            if (jugador2.barcos_hundidos == NUM_BARCOS) {
+                jugador2.ganador = 1;
+                juegoTerminado = 1;
+                printf("\n¡¡¡ %s HA GANADO !!!\n", jugador2.nombre);
+            }
+            turnoJugador = 1;
+        }
+
     }
 
+    //Resumen(jugador1, jugador2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2);
 
 
 }
+
 void Reiniciar_partida(char flota_jug1[][TAM],char oponente_jug1[][TAM],char flota_jug2[][TAM],char oponente_jug2[][TAM]){
     printf("[En desarrollo]\n");
     //se reinician los tableros
     inicializar_espacio(flota_jug1);
-    inicializar_agua(oponente_jug1);
+    inicializar_espacio(oponente_jug1);
     inicializar_espacio(flota_jug2);
-    inicializar_agua(oponente_jug2);
+    inicializar_espacio(oponente_jug2);
+    jugar();
 
     //se reinician las estadisticas (falta por hacer)
 }
 
-void Resumen(){
+void Resumen(char flota_jug1[][TAM],char oponente_jug1[][TAM],char flota_jug2[][TAM],char oponente_jug2[][TAM]){
+
     printf("[En desarrollo]\n");
     //imprimir tabla resumen
     imprimirCabeceraTabla();
@@ -220,7 +259,8 @@ void Resumen(){
     //datos jug2
     imprimirFilaJugador("Jugador2", 49, 27, 61, 0, 12, 3, 1, 0);
 
-
+    imprimirTableros(flota_jug1, oponente_jug1);
+    imprimirTableros(flota_jug2, oponente_jug2);
 }
 
 void imprimirCabeceraTabla() {

@@ -15,6 +15,12 @@ int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N])
 {
     int tocado = 0, i, j, hundido = 1;
     char barco;
+    if (fila < 0 || fila >= N || columna < 0 || columna >= N) { //comprueba si las coordenadas están dentro del tablero
+        printf("Coordenadas fuera del tablero.\n");
+        return -1; //error
+    }
+
+
     if (tablero[fila][columna] != '*' && tablero[fila][columna] != 'T' && tablero[fila][columna] != 'H')
     {
         tocado = 1;

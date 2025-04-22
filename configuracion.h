@@ -3,8 +3,15 @@
 
 //Estructuras
 typedef struct{
-char nombre[40];
-char disparo;
+    char nombre[40];
+    char disparo; //A: automatico, M: manual
+    int disparos_realizados;
+    int disparos_agua;
+    int casillas_tocadas;    // n de casillas marcadas como 'T' tablero del oponente
+    int casillas_hundidas;   // n de casillas marcadas como 'H' tablero del oponente
+    int barcos_hundidos;
+    int ganador;             //(se actualiza al final)
+
 }jugador;
 
 //Prototipos

@@ -6,13 +6,6 @@
 #include "configuracion.h"
 
 
-
-int main(){
-
-}
-
-
-
 //Funciones
 void config() {
     int opcion;
