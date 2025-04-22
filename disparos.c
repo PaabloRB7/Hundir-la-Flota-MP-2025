@@ -35,7 +35,7 @@ int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N])
     return tocado;
 }
 
-int disparo_manual(char tablero[][N], char tablero_v[][N])
+int disparo_manual(char tablero[][N], char tablero_v[][N], jugador *player)
 {
     int fila, columna, resultado;
 
@@ -47,18 +47,23 @@ int disparo_manual(char tablero[][N], char tablero_v[][N])
     {
     case 1:
         printf("\nTocado!\n\n");
+        player.casillas_tocadas++;
         break;
     case 2:
         printf("\nHUNDIDO!!!\n\n");
+        player.casillas_tocadas++;
+        player.barcos_hundidos++;
         break;
     default:
         printf("\nAgua...\n\n");
+        player.disparos_agua++;
     }
 
+    player.disparos_realizados++;
     return resultado;
 }
 
-int disparo_automatico(char tablero[][N], char tablero_v[][N])
+int disparo_automatico(char tablero[][N], char tablero_v[][N], jugador *player)
 {
     int max, min, fila, columna, i, j, barco_tocado, resultado = 0, repeticiones = 0;
     barco_tocado = 0;
@@ -102,13 +107,18 @@ int disparo_automatico(char tablero[][N], char tablero_v[][N])
     {
     case 1:
         printf("\nTocado!\n\n");
+        player.casillas_tocadas++;
         break;
     case 2:
         printf("\nHUNDIDO!!!\n\n");
+        player.casillas_tocadas++;
+        player.barcos_hundidos++;
         break;
     default:
         printf("\nAgua...\n\n");
+        player.disparos_agua++;
     }
+    player.disparos_realizados++;
     return resultado;
 }
 
