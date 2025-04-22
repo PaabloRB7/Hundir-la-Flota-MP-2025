@@ -8,24 +8,25 @@
 #include "configuracion.h"
 
 #define N 10
-#define NUM_BARCOS 5
+#define NUM_BARCOS 3
 
 // Funciones
-int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N])
+int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N]) //tablero: tablero barcos personales, tablero_v: tablero
 {
     int tocado = 0, i, j, hundido = 1;
     char barco;
-    if (fila < 0 || fila >= N || columna < 0 || columna >= N) { //comprueba si las coordenadas están dentro del tablero
-        printf("Coordenadas fuera del tablero.\n");
-        return -1; //error
-    }
+    //if (fila < 0 || fila >= N || columna < 0 || columna >= N) { //comprueba si las coordenadas están dentro del tablero
+    //    printf("Coordenadas fuera del tablero.\n");
+    //    return -1; //error
+    //}
 
 
-    if (tablero[fila][columna] != '*' && tablero[fila][columna] != 'T' && tablero[fila][columna] != 'H')
+    if (tablero[fila][columna] != ' ' && tablero[fila][columna] != 'T' && tablero[fila][columna] != 'H')
     {
         tocado = 1;
         barco = tablero[fila][columna];
         tablero[fila][columna] = 'T';
+        tablero_v[fila][columna] = 'T';
         buscar_proa(&fila, &columna, barco, tablero);
         tocado = tocado + tocado_o_hundido(tablero_v, tablero, fila, columna, barco);
     }
@@ -37,29 +38,32 @@ int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N])
 
 int disparo_manual(char tablero[][N], char tablero_v[][N], jugador *player)
 {
-    int fila, columna, resultado;
+    int fila=1, columna=1, resultado;
 
     printf("\nIntroduce las coordenadas del disparo (separando la fila y columna por un espacio): ");
-    scanf("%d %d", &fila, &columna);
+    printf("Numero de barcos hundidos: %d\n", player->barcos_hundidos);
+
+    scanf("%i %i", &fila, &columna);
+    fflush(stdin);
     resultado = disparo(fila, columna, tablero, tablero_v);
 
     switch (resultado)
     {
     case 1:
         printf("\nTocado!\n\n");
-        player.casillas_tocadas++;
+        player->casillas_tocadas++;
         break;
     case 2:
         printf("\nHUNDIDO!!!\n\n");
-        player.casillas_tocadas++;
-        player.barcos_hundidos++;
+        player->casillas_tocadas++;
+        player->barcos_hundidos++;
         break;
     default:
         printf("\nAgua...\n\n");
-        player.disparos_agua++;
+        player->disparos_agua++;
     }
 
-    player.disparos_realizados++;
+    player->disparos_realizados++;
     return resultado;
 }
 
@@ -107,26 +111,26 @@ int disparo_automatico(char tablero[][N], char tablero_v[][N], jugador *player)
     {
     case 1:
         printf("\nTocado!\n\n");
-        player.casillas_tocadas++;
+        player->casillas_tocadas++;
         break;
     case 2:
         printf("\nHUNDIDO!!!\n\n");
-        player.casillas_tocadas++;
-        player.barcos_hundidos++;
+        player->casillas_tocadas++;
+        player->barcos_hundidos++;
         break;
     default:
         printf("\nAgua...\n\n");
-        player.disparos_agua++;
+        player->disparos_agua++;
     }
-    player.disparos_realizados++;
+    player->disparos_realizados++;
     return resultado;
 }
 
 void hundido(char tablero_v[][N], char tablero[][N], int fila, int columna, char barco)
 {
-    int i, j, hundido = 1, bucle = 0, nfila, ncolumna;
-    fila = nfila;
-    columna = ncolumna;
+    int i, j, hundido = 1, bucle = 1, nfila, ncolumna;
+    nfila = fila;
+    ncolumna = columna;
 
     while (bucle == 1)
     {
@@ -151,9 +155,9 @@ void hundido(char tablero_v[][N], char tablero[][N], int fila, int columna, char
 
 int tocado_o_hundido(char tablero_v[][N], char tablero[][N], int fila, int columna, char barco)
 {
-    int i, j, hundid = 1, bucle = 0, nfila, ncolumna;
-    fila = nfila;
-    columna = ncolumna;
+    int i, j, hundid = 1, bucle = 1, nfila, ncolumna, mfila=100, mcolumna=100;
+    nfila = fila;
+    ncolumna = columna;
 
     while (bucle == 1)
     {
@@ -164,8 +168,10 @@ int tocado_o_hundido(char tablero_v[][N], char tablero[][N], int fila, int colum
             for (j = columna - 1; j <= columna + 1; j++)
                 if (i != fila || j != columna)
                 {
-                    if (tablero[i][j] == 'T')
+                    if (tablero[i][j] == 'T' && i != mfila && j != mcolumna)
                     {
+                        mfila = fila;
+                        mcolumna = columna;
                         nfila = i;
                         ncolumna = j;
                         bucle = 1;
@@ -184,7 +190,7 @@ int tocado_o_hundido(char tablero_v[][N], char tablero[][N], int fila, int colum
 
 void buscar_proa(int *fila, int *columna, char barco, char tablero[][N])
 {
-    int i, j, nfila, ncolumna, bucle = 0;
+    int i, j, nfila, ncolumna, bucle = 1;
     nfila = *fila;
     ncolumna = *columna;
 
@@ -202,13 +208,14 @@ void buscar_proa(int *fila, int *columna, char barco, char tablero[][N])
                             nfila = i;
                             ncolumna = j;
                             bucle = 1;
+
                         }
     }
 }
 
-void realizar_disparo(jugador jug, char tablero_oponente[][10], char tablero_disparos[][10]) {
-    if (jug.disparo == 'M')
-        disparo_manual(tablero_oponente, tablero_disparos);
-    else if (jug.disparo == 'A')
-        disparo_automatico(tablero_oponente, tablero_disparos);
+void realizar_disparo(jugador *jug, char tablero_oponente[][10], char tablero_disparos[][10]) {
+    if (jug->disparo == 'M')
+        disparo_manual(tablero_oponente, tablero_disparos, jug);
+    else if (jug->disparo == 'A')
+        disparo_automatico(tablero_oponente, tablero_disparos, jug);
 }

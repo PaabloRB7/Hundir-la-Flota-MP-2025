@@ -5,7 +5,6 @@
 #include "disparos.h"
 #include "configuracion.h"
 
-
 //Funciones
 void config() {
     int opcion;
@@ -29,6 +28,7 @@ void config() {
         case 6: return;
     }
 }
+/*
 
 void introducir_datos(){
     FILE *f;
@@ -37,7 +37,7 @@ void introducir_datos(){
     jugador j1, j2;
 
 
-/*    if ((f = fopen("config.txt", "r")) != NULL) {
+    if ((f = fopen("config.txt", "r")) != NULL) {
         if (fgetc(f) != EOF) {
             vacio = 0;
 
@@ -56,7 +56,7 @@ void introducir_datos(){
         fclose(f);
 
         printf("Archivo config.txt estaba vac�o. Se cre� una configuracion predeterminada.\n");
-*/
+
 
     if ((f = fopen("config.txt", "w")) != NULL) {
             printf("Error al abrir el archivo.\n");
@@ -137,3 +137,4 @@ void cargar(){
 //Pendiente
 }
 
+*/

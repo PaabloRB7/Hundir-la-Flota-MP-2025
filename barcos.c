@@ -5,7 +5,7 @@
 
 
 #define TAM 10
-#define NUM_BARCOS 5
+#define NUM_BARCOS 3
 
 void inicializar_barcos(barco test[]){
     strcpy(test[0].nombre, "Submarino");
@@ -28,7 +28,7 @@ void inicializar_barcos(barco test[]){
     test[2].eje_y = 0;
     test[2].eje_x = 0;
     test[2].orientacion = '\0';
-
+/*
     strcpy(test[3].nombre,"Acorazado");
     test[3].longitud = 4;
     test[3].tipo = 'A';
@@ -42,6 +42,7 @@ void inicializar_barcos(barco test[]){
     test[4].eje_y = 0;
     test[4].eje_x = 0;
     test[4].orientacion = '\0';
+    */
 }
 
 //void barcos_principal(){
@@ -147,7 +148,6 @@ void submarino(){
 int comprobar_casillas(char tablero[][TAM],int ejey,int ejex, barco barco[], int num_barco){
     switch (barco[num_barco].orientacion) {
         case 'H':
-            printf("debug");
             if (tablero[ejey-1][ejex-1]=='X' || tablero[ejey-1][ejex]=='X' || tablero[ejey-1][ejex+1]=='X' || tablero[ejey][ejex]=='X' || tablero[ejey][ejex+1]=='X' || tablero[ejey+1][ejex-1]=='X' || tablero[ejey+1][ejex]=='X' || tablero[ejey+1][ejex+1]=='X') {
                 return 1;       // si existe un barco en las casillas alrededores devuelve 1
             }
@@ -187,7 +187,7 @@ void colocar_barcos(char tablero[][TAM], barco test[]){
             imprimirTablero(tablero);
         }
         else {
-            printf("Indica la orientacion del barco %i,%s:\n",i,test[i].nombre);
+            printf("Indica la orientacion del barco %i,%s:\n",i+1,test[i].nombre);
             do
             {
                 scanf("%c",&test[i].orientacion);

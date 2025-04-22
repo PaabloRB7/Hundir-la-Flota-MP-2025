@@ -8,7 +8,7 @@
 #include "configuracion.h"
 
 #define TAM 10
-#define NUM_BARCOS 5
+#define NUM_BARCOS 3
 
 void menu_intro(){
     printf("Bienvenido a Hundir la flota\n");
@@ -166,6 +166,8 @@ void jugar_partida(){
     barco barcos_jug1[NUM_BARCOS];
     barco barcos_jug2[NUM_BARCOS];
 
+
+
     //jugadores
 
     jugador jugador1;
@@ -173,45 +175,45 @@ void jugar_partida(){
 
     // inicializacion
     strcpy(jugador1.nombre,"Jugador1");
+    //jugador1.disparos_realizados = 0;
     jugador1.disparo = 'M';
-    jugador1.disparos_realizados = 0;
-    jugador1.disparos_agua = 0;
-    jugador1.casillas_tocadas = 0;
-    jugador1.casillas_hundidas = 0;
-    jugador1.barcos_hundidos = 0;
-    jugador1.ganador = 0;
+    //jugador1.disparos_agua = 0;
+    //jugador1.casillas_tocadas = 0;
+    //jugador1.casillas_hundidas = 0;
+    //jugador1.barcos_hundidos = 0;
+    //jugador1.ganador = 0;
 
     strcpy(jugador2.nombre,"Jugador2");
     jugador2.disparo = 'M';
-    jugador2.disparos_realizados = 0;
-    jugador2.disparos_agua = 0;
-    jugador2.casillas_tocadas = 0;
-    jugador2.casillas_hundidas = 0;
-    jugador2.barcos_hundidos = 0;
-    jugador2.ganador = 0;
+    //jugador2.disparos_realizados = 0;
+    //jugador2.disparos_agua = 0;
+    //jugador2.casillas_tocadas = 0;
+    //jugador2.casillas_hundidas = 0;
+    //jugador2.barcos_hundidos = 0;
+    //jugador2.ganador = 0;
 
     //inicializar los tableros vacíos
     inicializar_espacio(flota_jug1);
-    inicializar_agua(oponente_jug1);
+    inicializar_espacio(oponente_jug1);
     inicializar_espacio(flota_jug2);
-    inicializar_agua(oponente_jug2);
+    inicializar_espacio(oponente_jug2);
 
     inicializar_barcos(barcos_jug1); //ejemplo de barcos (hay que quitarlo, se deben añadir en "Introducir datos")
     inicializar_barcos(barcos_jug2);
 
-    //colocar_barcos(flota_jug1, barcos_jug1);
-    //colocar_barcos(flota_jug2, barcos_jug2);
+    colocar_barcos(flota_jug1, barcos_jug1);
+    colocar_barcos(flota_jug2, barcos_jug2);
 
     int turnoJugador = 1; // 1 jugador1, 2 jugador2
     int juegoTerminado = 0;
 
-/*
+
     while (!juegoTerminado) {
         printf("\n--- Turno de %s ---\n", (turnoJugador == 1) ? jugador1.nombre : jugador2.nombre);
 
         if (turnoJugador == 1) {
             imprimirTableros(flota_jug1, oponente_jug1);
-            realizar_disparo(jugador1, flota_jug2, oponente_jug1);
+            realizar_disparo(&jugador1, flota_jug2, oponente_jug1);
             if (jugador1.barcos_hundidos == NUM_BARCOS) { //comprueba si ha ganado
                 jugador1.ganador = 1;
                 juegoTerminado = 1;
@@ -220,7 +222,7 @@ void jugar_partida(){
             turnoJugador = 2;
         } else {
             imprimirTableros(flota_jug2, oponente_jug2);
-            realizar_disparo(jugador2, flota_jug1, oponente_jug2);
+            realizar_disparo(&jugador2, flota_jug1, oponente_jug2);
             if (jugador2.barcos_hundidos == NUM_BARCOS) {
                 jugador2.ganador = 1;
                 juegoTerminado = 1;
@@ -230,7 +232,7 @@ void jugar_partida(){
         }
 
     }
-*/
+
     Resumen(&jugador1, &jugador2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2);
 
     menu_jugar();
