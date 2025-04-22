@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define N 10
+#include "menu_principal.h"
+#include "tablero.h"
+#include "barcos.h"
+#include "disparos.h"
+#include "configuracion.h"
 
-// Prototipos
-int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N]);
-int disparo_manual(char tablero[][N], char tablero_v[][N]);
-int disparo_automatico(char tablero[][N], char tablero_v[][N]);
-int tocado_o_hundido(char tablero_v[][N], char tablero[][N], int fila, int columna, char barco);
-void hundido(char tablero_v[][N], char tablero[][N], int fila, int columna, char barco);
-void buscar_proa(int *fila, int *columna, char barco, char tablero[][N]);
+#define N 10
+#define NUM_BARCOS 5
 
 // Funciones
 int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N])
@@ -189,4 +188,11 @@ void buscar_proa(int *fila, int *columna, char barco, char tablero[][N])
                             bucle = 1;
                         }
     }
+}
+
+void realizar_disparo(jugador jug, char tablero_oponente[][10], char tablero_disparos[][10]) {
+    if (jug.disparo == 'M')
+        disparo_manual(tablero_oponente, tablero_disparos);
+    else if (jug.disparo == 'A')
+        disparo_automatico(tablero_oponente, tablero_disparos);
 }

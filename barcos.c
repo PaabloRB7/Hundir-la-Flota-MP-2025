@@ -51,11 +51,6 @@ void inicializar_barcos(barco test[]){
 //    switch_barcos(aux);
 //}
 
-int seleccion_opcion(){
-    int seleccion;
-    scanf("%i",&seleccion);
-    return(seleccion);
-}
 
 void menu_barcos(){
     printf("Seleccione el barco que desea colocar:\n");

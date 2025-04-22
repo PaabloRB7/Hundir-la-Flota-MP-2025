@@ -1,20 +1,11 @@
 #include <stdio.h>
-#include <string.h>
 #include "menu_principal.h"
+#include "tablero.h"
+#include "barcos.h"
+#include "disparos.h"
+#include "configuracion.h"
 
-//Estructuras
-typedef struct{
-char nombre[40];
-char disparo[12];
-}jugador;
 
-//Prototipos
-void config();
-void introducir_datos(); //Es funcional pero tiene mejoras planteadas
-void mostrar(); //Pendiente
-void borrar(); //Dudas sobre restablecer o borrar
-void guardar(); //Pendiente
-void cargar(); //Pendiente
 
 int main(){
 
@@ -71,7 +62,7 @@ void introducir_datos(){
         }
         fclose(f);
 
-        printf("Archivo config.txt estaba vacío. Se creó una configuracion predeterminada.\n");
+        printf("Archivo config.txt estaba vacï¿½o. Se creï¿½ una configuracion predeterminada.\n");
 */
 
     if ((f = fopen("config.txt", "w")) != NULL) {
@@ -109,9 +100,9 @@ void introducir_datos(){
             if(respuesta == 's' || respuesta == 'n'){
                 bucle = 0;
                 if(respuesta == 's')
-                    strcpy(j2.disparo, "manual");
+                    j2.disparo = 'M';
                 else
-                    strcpy(j1.disparo, "automatico");
+                    j1.disparo = 'A';
             }
             else
                 printf("\nOpcion no valida\n");
@@ -152,3 +143,4 @@ void guardar(){
 void cargar(){
 //Pendiente
 }
+
