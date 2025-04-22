@@ -171,9 +171,9 @@ void jugar_partida(){
     jugador jugador1;
     jugador jugador2;
 
-    // --- INICIALIZACIÓN DE JUGADORES Y ESTADÍSTICAS ---
+    // inicializacion
     strcpy(jugador1.nombre,"Jugador1");
-    jugador1.disparo = 'M'; // Ejemplo
+    jugador1.disparo = 'M';
     jugador1.disparos_realizados = 0;
     jugador1.disparos_agua = 0;
     jugador1.casillas_tocadas = 0;
@@ -182,7 +182,7 @@ void jugar_partida(){
     jugador1.ganador = 0;
 
     strcpy(jugador2.nombre,"Jugador2");
-    jugador2.disparo = 'M'; // Ejemplo
+    jugador2.disparo = 'M';
     jugador2.disparos_realizados = 0;
     jugador2.disparos_agua = 0;
     jugador2.casillas_tocadas = 0;
@@ -199,13 +199,13 @@ void jugar_partida(){
     inicializar_barcos(barcos_jug1); //ejemplo de barcos (hay que quitarlo, se deben añadir en "Introducir datos")
     inicializar_barcos(barcos_jug2);
 
-    colocar_barcos(flota_jug1, barcos_jug1);
-    colocar_barcos(flota_jug2, barcos_jug2);
+    //colocar_barcos(flota_jug1, barcos_jug1);
+    //colocar_barcos(flota_jug2, barcos_jug2);
 
     int turnoJugador = 1; // 1 jugador1, 2 jugador2
     int juegoTerminado = 0;
 
-
+/*
     while (!juegoTerminado) {
         printf("\n--- Turno de %s ---\n", (turnoJugador == 1) ? jugador1.nombre : jugador2.nombre);
 
@@ -230,37 +230,102 @@ void jugar_partida(){
         }
 
     }
+*/
+    Resumen(&jugador1, &jugador2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2);
 
-    //Resumen(jugador1, jugador2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2);
-
+    menu_jugar();
 
 }
 
-void Reiniciar_partida(char flota_jug1[][TAM],char oponente_jug1[][TAM],char flota_jug2[][TAM],char oponente_jug2[][TAM]){
-    printf("[En desarrollo]\n");
-    //se reinician los tableros
-    inicializar_espacio(flota_jug1);
-    inicializar_espacio(oponente_jug1);
-    inicializar_espacio(flota_jug2);
-    inicializar_espacio(oponente_jug2);
-    jugar();
 
-    //se reinician las estadisticas (falta por hacer)
-}
 
-void Resumen(char flota_jug1[][TAM],char oponente_jug1[][TAM],char flota_jug2[][TAM],char oponente_jug2[][TAM]){
+// Implementación actualizada en menu_principal.c
+void Resumen(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM]){
 
-    printf("[En desarrollo]\n");
-    //imprimir tabla resumen
+    printf("\n--- RESUMEN DE LA PARTIDA ---\n\n");
+
     imprimirCabeceraTabla();
-    //datos jug1
-    imprimirFilaJugador("Jugador1", 49, 18, 69, 0, 13, 4, 0, 1);
 
-    //datos jug2
-    imprimirFilaJugador("Jugador2", 49, 27, 61, 0, 12, 3, 1, 0);
+    // --- Calcular y mostrar datos Jugador 1 ---
+    int vacias_j2 = 0; // Casillas no disparadas por J1 en el tablero de J2
+    // Contar casillas en el tablero de vista de J1 (oponente_jug1) que aún están en estado inicial (agua no disparada, ej '.')
+    // ¡¡ASEGÚRATE que '.' es tu carácter inicial para agua en el tablero de vista!!
+    for(int i=0; i<TAM; ++i) {
+        for(int j=0; j<TAM; ++j) {
+            // Si no es Tocado, Hundido o Agua ('*'), es una casilla vacía para el atacante
+            if(oponente_jug1[i][j] != 'T' && oponente_jug1[i][j] != 'H' && oponente_jug1[i][j] != '*') {
+                 vacias_j2++;
+            }
+        }
+    }
 
+    int restan_j2 = NUM_BARCOS - j1->barcos_hundidos; // Barcos de J2 que J1 no ha hundido
+
+    imprimirFilaJugador(j1->nombre,
+                       j1->disparos_realizados,
+                       vacias_j2,          // Calculado ahora
+                       j1->disparos_agua,
+                       j1->casillas_tocadas, // Contadas en disparo
+                       j1->casillas_hundidas, // Contadas en disparo
+                       j1->barcos_hundidos,  // Contados en disparo
+                       restan_j2,          // Calculado ahora
+                       j1->ganador);         // Actualizado en el bucle principal
+
+
+    // --- Calcular y mostrar datos Jugador 2 ---
+    int vacias_j1 = 0; // Casillas no disparadas por J2 en el tablero de J1
+    for(int i=0; i<TAM; ++i) {
+        for(int j=0; j<TAM; ++j) {
+            if(oponente_jug2[i][j] != 'T' && oponente_jug2[i][j] != 'H' && oponente_jug2[i][j] != '*') {
+                 vacias_j1++;
+            }
+        }
+    }
+    int restan_j1 = NUM_BARCOS - j2->barcos_hundidos; // Barcos de J1 que J2 no ha hundido
+
+    imprimirFilaJugador(j2->nombre,
+                       j2->disparos_realizados,
+                       vacias_j1,          // Calculado ahora
+                       j2->disparos_agua,
+                       j2->casillas_tocadas,
+                       j2->casillas_hundidas,
+                       j2->barcos_hundidos,
+                       restan_j1,          // Calculado ahora
+                       j2->ganador);
+
+    printf("\nTablero final %s:\n", j1->nombre);
     imprimirTableros(flota_jug1, oponente_jug1);
+
+    printf("\nTablero final %s:\n", j2->nombre);
     imprimirTableros(flota_jug2, oponente_jug2);
+
+}
+
+void Reiniciar_partida(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM]){
+    // reiniciar tableros
+    inicializar_espacio(flota_jug1);
+    inicializar_agua(oponente_jug1);
+    inicializar_espacio(flota_jug2);
+    inicializar_agua(oponente_jug2);
+
+    // reiniciar estadísticas de los jugadores
+    j1->disparos_realizados = 0;
+    j1->disparos_agua = 0;
+    j1->casillas_tocadas = 0;
+    j1->casillas_hundidas = 0;
+    j1->barcos_hundidos = 0;
+    j1->ganador = 0;
+
+    j2->disparos_realizados = 0;
+    j2->disparos_agua = 0;
+    j2->casillas_tocadas = 0;
+    j2->casillas_hundidas = 0;
+    j2->barcos_hundidos = 0;
+    j2->ganador = 0;
+
+    printf("Partida reiniciada (estadísticas y tableros).\n");
+    //volver a menu_jugar
+    menu_jugar();
 }
 
 void imprimirCabeceraTabla() {
