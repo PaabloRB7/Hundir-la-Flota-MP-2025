@@ -39,27 +39,27 @@ void menu_configuracion();
 // Cabecera: Permite introducir datos en el sistema.
 // Precondición: Ninguna.
 // Postcondición: Los datos introducidos se almacenan.
-void introducir_datos();
+void introducir_datos(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]);
 
 // Cabecera: Muestra los datos almacenados en el sistema.
 // Precondición: Deben existir datos almacenados.
 // Postcondición: Se imprimen los datos en pantalla.
-void mostrar();
+void mostrar(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]);
 
 // Cabecera: Borra datos almacenados en el sistema.
 // Precondición: Deben existir datos almacenados.
 // Postcondición: Los datos seleccionados se eliminan.
-void borrar();
+void borrar(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]);
 
 // Cabecera: Guarda los datos actuales en un archivo.
 // Precondición: Deben existir datos para guardar.
 // Postcondición: Los datos se almacenan en un archivo.
-void guardar();
+void guardar(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]);
 
 // Cabecera: Carga datos desde un archivo al sistema.
 // Precondición: El archivo debe existir y ser válido.
 // Postcondición: Los datos se cargan en el sistema.
-void cargar();
+void cargar(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]);
 
 // Cabecera: Inicia el flujo principal del juego.
 // Precondición: Los jugadores y tableros deben estar configurados.

@@ -8,17 +8,13 @@
 #include "configuracion.h"
 
 #define N 10
-#define NUM_BARCOS 3
+#define NUM_BARCOS 4
 
 // Funciones
 int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N]) //tablero: tablero barcos personales, tablero_v: tablero
 {
     int tocado = 0, i, j, hundido = 1;
     char barco;
-    //if (fila < 0 || fila >= N || columna < 0 || columna >= N) { //comprueba si las coordenadas están dentro del tablero
-    //    printf("Coordenadas fuera del tablero.\n");
-    //    return -1; //error
-    //}
 
 
     if (tablero[fila][columna] != ' ' && tablero[fila][columna] != 'T' && tablero[fila][columna] != 'H')
@@ -50,16 +46,16 @@ int disparo_manual(char tablero[][N], char tablero_v[][N], jugador *player)
     switch (resultado)
     {
     case 1:
-        printf("\nTOCADO!\n\n");
+        printf("TOCADO!\n");
         player->casillas_tocadas++;
         break;
     case 2:
-        printf("\nHUNDIDO!\n\n");
+        printf("HUNDIDO!\n");
         player->casillas_tocadas++;
         player->barcos_hundidos++;
         break;
     default:
-        printf("\nAgua...\n\n");
+        printf("Agua...\n");
         player->disparos_agua++;
     }
 
@@ -131,16 +127,16 @@ int disparo_automatico(char tablero[][N], char tablero_v[][N], jugador *player)
     switch (resultado)
     {
     case 1:
-        printf("\nTOCADO!\n\n");
+        printf("TOCADO!\n");
         player->casillas_tocadas++;
         break;
     case 2:
-        printf("\nHUNDIDO!\n\n");
+        printf("HUNDIDO!\n");
         player->casillas_tocadas++;
         player->barcos_hundidos++;
         break;
     default:
-        printf("\nAgua...\n\n");
+        printf("Agua...\n");
         player->disparos_agua++;
     }
 

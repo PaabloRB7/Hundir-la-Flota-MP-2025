@@ -5,9 +5,9 @@
 
 
 #define TAM 10
-#define NUM_BARCOS 3
+#define NUM_BARCOS 4
 
-void inicializar_barcos(barco test[]){
+void inicializar_barcos(barco test[]){ //barcos de ejemplo
     strcpy(test[0].nombre, "Submarino");
     test[0].longitud = 1;
     test[0].tipo = 'S';
@@ -28,14 +28,14 @@ void inicializar_barcos(barco test[]){
     test[2].eje_y = 0;
     test[2].eje_x = 0;
     test[2].orientacion = '\0';
-/*
+
     strcpy(test[3].nombre,"Acorazado");
     test[3].longitud = 4;
     test[3].tipo = 'A';
     test[3].eje_y = 0;
     test[3].eje_x = 0;
     test[3].orientacion = '\0';
-
+/*
     strcpy(test[4].nombre,"Portaaviones");
     test[4].longitud = 5;
     test[4].tipo = 'P';
@@ -63,36 +63,6 @@ void menu_barcos(){
     printf("6. Submarino\n");
 }
 
-/*
-
-void switch_barcos(int aux){
-    switch(aux){
-        case 1:
-            portaaviones();
-            break;
-        case 2:
-            acorazado();
-            break;
-        case 3:
-            crucero();
-            break;
-        case 4:
-            destructor();
-            break;
-        case 5:
-            fragata();
-            break;
-        case 6:
-            submarino();
-            break;
-        default:
-            printf("Opcion no valida\n");
-            barcos_principal();
-            break;
-    }
-}
-
-*/
 
 int menu_colocaccion(){
     int op;
@@ -106,44 +76,6 @@ int menu_colocaccion(){
     return op;
 }
 
-/*
-void switch_colocacion(){
-
-}
-
-void portaaviones(){
-    int vida=6;
-    char nom='P';
-    menu_colocaccion();
-
-}
-
-void acorazado(){
-    int vida=5;
-    char nom='A';
-}
-
-void crucero(){
-    int vida=4;
-    char nom='C';
-}
-
-void destructor(){
-    int vida=3;
-    char nom='D';
-}
-
-void fragata(){
-    int vida=2;
-    char nom='F';
-}
-
-void submarino(){
-    int vida=1;
-    char nom='S';
-}
-
-*/
 
 int comprobar_casillas(char tablero[][TAM],int ejey,int ejex, barco barco[], int num_barco){
     switch (barco[num_barco].orientacion) {

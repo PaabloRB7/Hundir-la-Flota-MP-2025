@@ -9,7 +9,7 @@
 #include "configuracion.h"
 
 #define TAM 10
-#define NUM_BARCOS 3
+#define NUM_BARCOS 4
 
 
 
@@ -17,12 +17,17 @@ int main(){
 
     srand(time(NULL));
 
-    // tablero[eje y][eje x]
-    //falta crearla dinamicamente
-    char flota_jug1[TAM][TAM];
-    char oponente_jug1[TAM][TAM];
-    char flota_jug2[TAM][TAM];
-    char oponente_jug2[TAM][TAM];
+    // tableros   [eje y][eje x]
+    //char flota_jug1[TAM][TAM];
+    //char oponente_jug1[TAM][TAM];
+    //char flota_jug2[TAM][TAM];
+    //char oponente_jug2[TAM][TAM];
+
+    // Crear matrices dinámicamente
+    char (*flota_jug1)[TAM] = malloc(TAM * TAM * sizeof(char));
+    char (*oponente_jug1)[TAM] = malloc(TAM * TAM * sizeof(char));
+    char (*flota_jug2)[TAM] = malloc(TAM * TAM * sizeof(char));
+    char (*oponente_jug2)[TAM] = malloc(TAM * TAM * sizeof(char));
 
     //barcos
 
@@ -36,22 +41,22 @@ int main(){
 
     // inicializacion
     strcpy(jugador1.nombre,"Jugador1");
-    //jugador1.disparos_realizados = 0;
+    jugador1.disparos_realizados = 0;
     jugador1.disparo = 'M';
-    //jugador1.disparos_agua = 0;
-    //jugador1.casillas_tocadas = 0;
-    //jugador1.casillas_hundidas = 0;
-    //jugador1.barcos_hundidos = 0;
-    //jugador1.ganador = 0;
+    jugador1.disparos_agua = 0;
+    jugador1.casillas_tocadas = 0;
+    jugador1.casillas_hundidas = 0;
+    jugador1.barcos_hundidos = 0;
+    jugador1.ganador = 0;
 
     strcpy(jugador2.nombre,"Jugador2");
     jugador2.disparo = 'M';
-    //jugador2.disparos_realizados = 0;
-    //jugador2.disparos_agua = 0;
-    //jugador2.casillas_tocadas = 0;
-    //jugador2.casillas_hundidas = 0;
-    //jugador2.barcos_hundidos = 0;
-    //jugador2.ganador = 0;
+    jugador2.disparos_realizados = 0;
+    jugador2.disparos_agua = 0;
+    jugador2.casillas_tocadas = 0;
+    jugador2.casillas_hundidas = 0;
+    jugador2.barcos_hundidos = 0;
+    jugador2.ganador = 0;
 
     //inicializar los tableros vacíos
     inicializar_espacio(flota_jug1);
@@ -67,6 +72,12 @@ int main(){
     menu_intro();
     aux=seleccion_opcion();
     switch_menu(aux, &jugador1, &jugador2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
+
+    // libera memoria al final del programa
+    free(flota_jug1);
+    free(oponente_jug1);
+    free(flota_jug2);
+    free(oponente_jug2);
 
     return 0;
 }
