@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "menu_principal.h"
 #include "tablero.h"
 #include "barcos.h"
@@ -11,6 +13,7 @@
 
 int main(){
 
+    srand(time(NULL));
     int aux=0;
     menu_intro();
     aux=seleccion_opcion();

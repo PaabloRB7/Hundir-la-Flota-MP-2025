@@ -69,6 +69,89 @@ int disparo_manual(char tablero[][N], char tablero_v[][N], jugador *player)
 
 int disparo_automatico(char tablero[][N], char tablero_v[][N], jugador *player)
 {
+    int fila, columna, i, j, barco_tocado = 0, resultado = 0;
+    int repeticiones = 0;
+    int intentos_maximos = 100;
+
+    for (i = 0; i < N && barco_tocado == 0; i++)
+    {
+        for (j = 0; j < N && barco_tocado == 0; j++)
+        {
+            if (tablero_v[i][j] == 'T')
+            {
+                barco_tocado = 1;
+                do
+                {
+                    int intentos = 0;
+                    int min_f = (i - 1 < 0) ? 0 : i - 1;
+                    int max_f = (i + 1 >= N) ? N - 1 : i + 1;
+                    int min_c = (j - 1 < 0) ? 0 : j - 1;
+                    int max_c = (j + 1 >= N) ? N - 1 : j + 1;
+
+                    fila = (rand() % (max_f - min_f + 1)) + min_f;
+                    columna = (rand() % (max_c - min_c + 1)) + min_c;
+
+                    repeticiones++;
+                    intentos++;
+
+
+                    if (repeticiones >= 10 || intentos >= intentos_maximos)
+                    {
+                        barco_tocado = 0;
+                        break;
+                    }
+
+                } while (tablero_v[fila][columna] == 'T' || tablero_v[fila][columna] == '*');
+
+                if (barco_tocado == 1)
+                {
+                    resultado = disparo(fila, columna, tablero, tablero_v);
+                }
+            }
+        }
+    }
+
+
+    if (barco_tocado == 0)
+    {
+        int intentos = 0;
+        do
+        {
+            fila = rand() % N;
+            columna = rand() % N;
+            intentos++;
+            if (intentos >= intentos_maximos)
+                break;
+        } while (tablero_v[fila][columna] == 'T' || tablero_v[fila][columna] == '*');
+
+        resultado = disparo(fila, columna, tablero, tablero_v);
+    }
+
+
+    switch (resultado)
+    {
+    case 1:
+        printf("\nTocado!\n\n");
+        player->casillas_tocadas++;
+        break;
+    case 2:
+        printf("\nHUNDIDO!!!\n\n");
+        player->casillas_tocadas++;
+        player->barcos_hundidos++;
+        break;
+    default:
+        printf("\nAgua...\n\n");
+        player->disparos_agua++;
+    }
+
+    player->disparos_realizados++;
+    return resultado;
+}
+
+
+/* Version anterior disparo_automatico
+int disparo_automatico(char tablero[][N], char tablero_v[][N], jugador *player)
+{
     int max, min, fila, columna, i, j, barco_tocado, resultado = 0, repeticiones = 0;
     barco_tocado = 0;
     srand(time(NULL));
@@ -125,6 +208,7 @@ int disparo_automatico(char tablero[][N], char tablero_v[][N], jugador *player)
     player->disparos_realizados++;
     return resultado;
 }
+*/
 
 void hundido(char tablero_v[][N], char tablero[][N], int fila, int columna, char barco)
 {

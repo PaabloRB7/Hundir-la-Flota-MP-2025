@@ -28,42 +28,18 @@ void config() {
         case 6: return;
     }
 }
-/*
+
 
 void introducir_datos(){
     FILE *f;
-    int n, num_tiposbarcos, tiposbarcos[10], primerturno, bucle, respuesta;
-    //int vacio = 1; Esta variable es para una futura mejora de la introduccion de datos
+    int n, num_barcos, tiposbarcos[4], primerturno, bucle, respuesta; //tipos de barcos 0 = S, 1 = F, 2 = C, 3 = A y 4 = P
     jugador j1, j2;
-
-
-    if ((f = fopen("config.txt", "r")) != NULL) {
-        if (fgetc(f) != EOF) {
-            vacio = 0;
-
-        }
-        fclose(f);
-    }
-
-    if (vacio = 1) {
-        if ((f = fopen("config.txt", "w")) != NULL) {
-            printf("Error al abrir el archivo.\n");
-            return;
-        }
-        else {
-            fprintf(f, "Jugador1\0 manual\0 Jugador2\0 automatico\0 \n 9 4 1 2 1 2 \n 1")
-        }
-        fclose(f);
-
-        printf("Archivo config.txt estaba vac�o. Se cre� una configuracion predeterminada.\n");
-
 
     if ((f = fopen("config.txt", "w")) != NULL) {
             printf("Error al abrir el archivo.\n");
             return;
         }
     else {
-        //Introducir valores (tengo pensado pasarlo a una funcion a parte para mayor claridad visual)
         printf("\nIntroduzca el nombre del jugador 1: ");
         fflush(stdin);
         fgets(j1.nombre, sizeof(j1.nombre), stdin);
@@ -75,12 +51,14 @@ void introducir_datos(){
             if(respuesta == 's' || respuesta == 'n'){
                 bucle = 0;
                 if(respuesta == 's')
-                    strcpy(j1.disparo, "manual");
+                    j1.disparo = 'M';
                 else
-                    strcpy(j1.disparo, "automatico");
+                    j1.disparo = 'A';
             }
-            else
+            else{
                 printf("\nOpcion no valida\n");
+                bucle = 1;
+            }
         }
         printf("\nIntroduzca el nombre del jugador 2: ");
         fflush(stdin);
@@ -95,18 +73,32 @@ void introducir_datos(){
                 if(respuesta == 's')
                     j2.disparo = 'M';
                 else
-                    j1.disparo = 'A';
+                    j2.disparo = 'A';
             }
-            else
+            else{
                 printf("\nOpcion no valida\n");
+                bucle = 1;
+            }
         }
-        //Falta imolementar tipos de barocs y cuantos barcos de cada se podra usar
+
+        printf("\nSubmarinos que habra en la partida: ");
+        scanf("%d", &tiposbarcos[0]);
+        printf("\nFragatas que habra en la partida: ");
+        scanf("%d", &tiposbarcos[1]);
+        printf("\nCruceros que habra en la partida: ");
+        scanf("%d", &tiposbarcos[2]);
+        printf("\nAcorazados que habra en la partida: ");
+        scanf("%d", &tiposbarcos[3]);
+        printf("\nPortaaviones que habra en la partida: ");
+        scanf("%d", &tiposbarcos[4]);
+        num_barcos = tiposbarcos[0] + tiposbarcos[1] + tiposbarcos[2] + tiposbarcos[3] + tiposbarcos[4];
+
         printf("\nIntroduzca el numero del jugador que comenzara la partida (1/2): ");
         scanf("%d", &primerturno);
 
         //Guardar en fichero
         fprintf("%s %s %s %s \n", j1.nombre, j1.disparo, j2.nombre, j2.disparo);
-        //Falta implementar tipos de barcos y cuantos barcos de cada se podra usar
+        fprintf("%d %d %d %d %d %d\n", tiposbarcos[0], tiposbarcos[1], tiposbarcos[2], tiposbarcos[3], tiposbarcos[4], num_barcos);
         fprintf("%d", primerturno);
 
     }
@@ -129,12 +121,81 @@ void borrar(){
     }
 }
 
-void guardar(){
-//Pendiente
+extern jugador j1, j2;
+extern tipo_barco tipos_barcos[10];
+extern int num_tipos_barco, tam_tablero, num_barcos;
+
+void guardar() {
+    FILE *f = fopen("Juego.txt", "w");
+    if (!f) {
+        printf("Error al abrir Juego.txt para guardar.\n");
+        return;
+    }
+
+    // Datos generales
+    fprintf(f, "%d-%d-%d\n", tam_tablero, num_barcos, num_tipos_barco);
+
+    // Tipos de barco
+    for (int i = 0; i < num_tipos_barco; i++) {
+        fprintf(f, "%c-%d\n", tipos_barcos[i].id, tipos_barcos[i].cantidad);
+    }
+
+    // Guardar datos del jugador 1
+    fprintf(f, "1-%s-%d-%c-%d\n", j1.nombre, j1.disparos_realizados, j1.disparo, j1.ganador);
+    for (int i = 0; i < tam_tablero; i++) {
+        for (int j = 0; j < tam_tablero; j++) {
+            fprintf(f, "%c", j1.tablero_propio[i][j]);
+        }
+        fprintf(f, "\n");
+    }
+    for (int i = 0; i < tam_tablero; i++) {
+        for (int j = 0; j < tam_tablero; j++) {
+            fprintf(f, "%c", j1.tablero_oponente[i][j]);
+        }
+        fprintf(f, "\n");
+    }
+
+    // Guardar datos del jugador 2
+    fprintf(f, "2-%s-%d-%c-%d\n", j2.nombre, j2.disparos, j2.tipo_disparo, j2.ganador);
+    for (int i = 0; i < tam_tablero; i++) {
+        for (int j = 0; j < tam_tablero; j++) {
+            fprintf(f, "%c", j2.tablero_propio[i][j]);
+        }
+        fprintf(f, "\n");
+    }
+    for (int i = 0; i < tam_tablero; i++) {
+        for (int j = 0; j < tam_tablero; j++) {
+            fprintf(f, "%c", j2.tablero_oponente[i][j]);
+        }
+        fprintf(f, "\n");
+    }
+
+    fclose(f);
+    printf("Partida guardada correctamente.\n");
 }
 
-void cargar(){
-//Pendiente
+void cargar() {
+    FILE *f = fopen("Juego.txt", "r");
+    if (!f) {
+        printf("Error al abrir Juego.txt para cargar.\n");
+        return;
+    }
+
+    fscanf(f, "%d-%d-%d\n", &tam_tablero, &num_barcos, &num_tipos_barco);
+
+    for (int i = 0; i < num_tipos_barco; i++) {
+        fscanf(f, "%c-%d\n", &tipos_barcos[i].id, &tipos_barcos[i].cantidad);
+    }
+
+    fscanf(f, "1-%[^-]-%d-%c-%d\n", j1.nombre, &j1.disparos, &j1.tipo_disparo, &j1.ganador);
+    for (int i = 0; i < tam_tablero; i++) fscanf(f, "%s\n", j1.tablero_propio[i]);
+    for (int i = 0; i < tam_tablero; i++) fscanf(f, "%s\n", j1.tablero_oponente[i]);
+
+    fscanf(f, "2-%[^-]-%d-%c-%d\n", j2.nombre, &j2.disparos, &j2.tipo_disparo, &j2.ganador);
+    for (int i = 0; i < tam_tablero; i++) fscanf(f, "%s\n", j2.tablero_propio[i]);
+    for (int i = 0; i < tam_tablero; i++) fscanf(f, "%s\n", j2.tablero_oponente[i]);
+
+    fclose(f);
+    printf("Partida cargada correctamente.\n");
 }
 
-*/

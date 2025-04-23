@@ -2,6 +2,11 @@
 #define configuracion_h
 
 //Estructuras
+typedef struct {
+    char id;
+    int cantidad;
+}tipo_barco;
+
 typedef struct{
     char nombre[40];
     char disparo; //A: automatico, M: manual
