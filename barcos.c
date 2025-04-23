@@ -187,7 +187,7 @@ void colocar_barcos(char tablero[][TAM], barco test[]){
             imprimirTablero(tablero);
         }
         else {
-            printf("Indica la orientacion del barco %i,%s:\n",i+1,test[i].nombre);
+            printf("Indica la orientacion del barco %i,%s:\n[H: Horizontal, V:Vertical, D: Diagonal derecha, I: Diagonal izquierda]  ",i+1,test[i].nombre);
             do
             {
                 scanf("%c",&test[i].orientacion);

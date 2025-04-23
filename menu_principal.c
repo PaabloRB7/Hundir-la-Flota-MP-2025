@@ -24,13 +24,13 @@ int seleccion_opcion(){
     return opcion;
 }
 
-void switch_menu(int aux){ //ESTA FUNCION TIENE QUE RECIBIR TODO
+void switch_menu(int aux, jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]){
     switch(aux){
         case 1:
-            configuracion();
+            configuracion(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
             break;
         case 2:
-            jugar();
+            jugar(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
             break;
         case 3:
             break; 
@@ -40,16 +40,14 @@ void switch_menu(int aux){ //ESTA FUNCION TIENE QUE RECIBIR TODO
     }
 }
 
-void configuracion(){ //ESTA FUNCION TIENE QUE RECIBIR TODO
+void configuracion(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]){  
     int aux=0;
+    menu_configuracion();
     aux=seleccion_opcion();
-    switch_configuracion(aux);
+    switch_configuracion(aux,j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
 }
 
-
-
-void switch_configuracion(int aux){ //ESTA FUNCION TIENE QUE RECIBIR TODO
-
+void menu_configuracion(){
     printf("Menu Configuracion\n");
     printf("1. Introducir datos\n");
     printf("2. Mostrar\n");
@@ -57,6 +55,9 @@ void switch_configuracion(int aux){ //ESTA FUNCION TIENE QUE RECIBIR TODO
     printf("4. Guardar\n");
     printf("5. Cargar\n");
     printf("6. Volver\n");
+}
+
+void switch_configuracion(int aux, jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]){  
 
     switch (aux){
         case 1:
@@ -77,11 +78,11 @@ void switch_configuracion(int aux){ //ESTA FUNCION TIENE QUE RECIBIR TODO
         case 6:
             menu_intro();
             aux=seleccion_opcion();
-            switch_menu(aux);
+            switch_menu(aux, j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
             break;
         default:
             printf("Opcion no valida\n");
-            configuracion();
+            configuracion(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
             break;
     }
 }
@@ -110,140 +111,97 @@ void cargar(){
 
 }
 
-void jugar(){ //ESTA FUNCION TIENE QUE RECIBIR TODO
+void jugar(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]){  
     int aux=0;
+    menu_jugar();
     aux=seleccion_opcion();
-    switch_jugar(aux);
+    switch_jugar(aux,j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
 }
 
-
-
-void switch_jugar(int aux){ //ESTA FUNCION TIENE QUE RECIBIR TODO
-
+void menu_jugar(){
     printf("Menu Jugar\n");
     printf("1. Jugar partida\n");
     printf("2. Reiniciar partida\n");
     printf("3. Resumen\n");
-    printf("4. Volver\n");
+    printf("4. Volver al menu principal\n");
+}
+
+void switch_jugar(int aux, jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]){  
+
+
 
     switch (aux){
         case 1:
-            jugar_partida();
+            jugar_partida(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
             break;
-        //case 2:
-        //    Reiniciar_partida();
-        //    break;
-        //case 3:
-            //Resumen();
-        //    break;
+        case 2:
+            Reiniciar_partida(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
+            break;
+        case 3:
+            Resumen(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
+            break;
         case 4:
             menu_intro();
             aux=seleccion_opcion();
-            switch_menu(aux);
+            switch_menu(aux, j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
             break;
         default:
             printf("Opcion no valida\n");
-            jugar();
+            jugar(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
             break;
     }
 }
 
-void jugar_partida(){
-
-    // tablero[eje y][eje x]
-    //falta crearla dinamicamente
-    char flota_jug1[TAM][TAM];
-    char oponente_jug1[TAM][TAM];
-    char flota_jug2[TAM][TAM];
-    char oponente_jug2[TAM][TAM];
-
-    //barcos
-
-    barco barcos_jug1[NUM_BARCOS];
-    barco barcos_jug2[NUM_BARCOS];
-
-
-
-    //jugadores
-
-    jugador jugador1;
-    jugador jugador2;
-
-    // inicializacion
-    strcpy(jugador1.nombre,"Jugador1");
-    //jugador1.disparos_realizados = 0;
-    jugador1.disparo = 'M';
-    //jugador1.disparos_agua = 0;
-    //jugador1.casillas_tocadas = 0;
-    //jugador1.casillas_hundidas = 0;
-    //jugador1.barcos_hundidos = 0;
-    //jugador1.ganador = 0;
-
-    strcpy(jugador2.nombre,"Jugador2");
-    jugador2.disparo = 'M';
-    //jugador2.disparos_realizados = 0;
-    //jugador2.disparos_agua = 0;
-    //jugador2.casillas_tocadas = 0;
-    //jugador2.casillas_hundidas = 0;
-    //jugador2.barcos_hundidos = 0;
-    //jugador2.ganador = 0;
-
-    //inicializar los tableros vacíos
-    inicializar_espacio(flota_jug1);
-    inicializar_espacio(oponente_jug1);
-    inicializar_espacio(flota_jug2);
-    inicializar_espacio(oponente_jug2);
-
-    inicializar_barcos(barcos_jug1); //ejemplo de barcos (hay que quitarlo, se deben añadir en "Introducir datos")
-    inicializar_barcos(barcos_jug2);
+void jugar_partida(jugador *jugador1, jugador *jugador2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]){
 
     colocar_barcos(flota_jug1, barcos_jug1);
     colocar_barcos(flota_jug2, barcos_jug2);
+
 
     int turnoJugador = 1; // 1 jugador1, 2 jugador2
     int juegoTerminado = 0;
 
 
     while (!juegoTerminado) {
-        printf("\n--- Turno de %s ---\n", (turnoJugador == 1) ? jugador1.nombre : jugador2.nombre);
+        printf("\n--- Turno de %s ---\n", (turnoJugador == 1) ? jugador1->nombre : jugador2->nombre);
 
         if (turnoJugador == 1) {
             imprimirTableros(flota_jug1, oponente_jug1);
-            realizar_disparo(&jugador1, flota_jug2, oponente_jug1);
-            if (jugador1.barcos_hundidos == NUM_BARCOS) { //comprueba si ha ganado
-                jugador1.ganador = 1;
+            realizar_disparo(jugador1, flota_jug2, oponente_jug1);
+            if (jugador1->barcos_hundidos == NUM_BARCOS) { //comprueba si ha ganado
+                jugador1->ganador = 1;
                 juegoTerminado = 1;
-                printf("\n¡¡¡ %s HA GANADO !!!\n", jugador1.nombre);
+                printf("\n¡¡¡ %s HA GANADO !!!\n", jugador1->nombre);
             }
             turnoJugador = 2;
         } else {
             imprimirTableros(flota_jug2, oponente_jug2);
-            realizar_disparo(&jugador2, flota_jug1, oponente_jug2);
-            if (jugador2.barcos_hundidos == NUM_BARCOS) {
-                jugador2.ganador = 1;
+            realizar_disparo(jugador2, flota_jug1, oponente_jug2);
+            if (jugador2->barcos_hundidos == NUM_BARCOS) {
+                jugador2->ganador = 1;
                 juegoTerminado = 1;
-                printf("\n¡¡¡ %s HA GANADO !!!\n", jugador2.nombre);
+                printf("\n¡¡¡ %s HA GANADO !!!\n", jugador2->nombre);
             }
             turnoJugador = 1;
         }
 
     }
 
-    Resumen(&jugador1, &jugador2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2);
+    Resumen(jugador1, jugador2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
 
-    jugar();
+    jugar(jugador1, jugador2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
 
 }
 
 
 
 // Implementación actualizada en menu_principal.c
-void Resumen(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM]){
+void Resumen(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]){
 
-    printf("\n--- RESUMEN DE LA PARTIDA ---\n\n");
+    printf("--- RESUMEN DE LA PARTIDA ---\n");
 
     imprimirCabeceraTabla();
-/*
+
     // --- Calcular y mostrar datos Jugador 1 ---
     int vacias_j2 = 0; // Casillas no disparadas por J1 en el tablero de J2
     // Contar casillas en el tablero de vista de J1 (oponente_jug1) que aún están en estado inicial (agua no disparada, ej '.')
@@ -258,20 +216,20 @@ void Resumen(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug
     }
 
     int restan_j2 = NUM_BARCOS - j1->barcos_hundidos; // Barcos de J2 que J1 no ha hundido
-*/
+
     imprimirFilaJugador(j1->nombre,
                        j1->disparos_realizados,
-                       0,//vacias_j2,          // Calculado ahora
+                       vacias_j2,          // Calculado ahora
                        j1->disparos_agua,
                        j1->casillas_tocadas, // Contadas en disparo
                        j1->casillas_hundidas, // Contadas en disparo
                        j1->barcos_hundidos,  // Contados en disparo
-                       0,//restan_j2,          // Calculado ahora
+                       restan_j2,          // Calculado ahora
                        j1->ganador);         // Actualizado en el bucle principal
 
 
     // --- Calcular y mostrar datos Jugador 2 ---
-    /*
+
     int vacias_j1 = 0; // Casillas no disparadas por J2 en el tablero de J1
     for(int i=0; i<TAM; ++i) {
         for(int j=0; j<TAM; ++j) {
@@ -281,15 +239,15 @@ void Resumen(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug
         }
     }
     int restan_j1 = NUM_BARCOS - j2->barcos_hundidos; // Barcos de J1 que J2 no ha hundido
-*/
+
     imprimirFilaJugador(j2->nombre,
                        j2->disparos_realizados,
-                       0,//vacias_j1,          // Calculado ahora
+                       vacias_j1,          // Calculado ahora
                        j2->disparos_agua,
                        j2->casillas_tocadas,
                        j2->casillas_hundidas,
                        j2->barcos_hundidos,
-                       0,//restan_j1,          // Calculado ahora
+                       restan_j1,          // Calculado ahora
                        j2->ganador);
 
     printf("\nTablero final %s:\n", j1->nombre);
@@ -298,14 +256,16 @@ void Resumen(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug
     printf("\nTablero final %s:\n", j2->nombre);
     imprimirTableros(flota_jug2, oponente_jug2);
 
+    jugar(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
+
 }
 
-void Reiniciar_partida(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM]){
+void Reiniciar_partida(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]){
     // reiniciar tableros
     inicializar_espacio(flota_jug1);
-    inicializar_agua(oponente_jug1);
+    inicializar_espacio(oponente_jug1);
     inicializar_espacio(flota_jug2);
-    inicializar_agua(oponente_jug2);
+    inicializar_espacio(oponente_jug2);
 
     // reiniciar estadísticas de los jugadores
     j1->disparos_realizados = 0;
@@ -324,7 +284,7 @@ void Reiniciar_partida(jugador *j1, jugador *j2, char flota_jug1[][TAM], char op
 
     printf("Partida reiniciada (estadísticas y tableros).\n");
     //volver al menu
-    jugar();
+    jugar(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
 }
 
 void imprimirCabeceraTabla() {

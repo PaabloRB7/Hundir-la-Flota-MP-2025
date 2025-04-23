@@ -50,11 +50,11 @@ int disparo_manual(char tablero[][N], char tablero_v[][N], jugador *player)
     switch (resultado)
     {
     case 1:
-        printf("\nTocado!\n\n");
+        printf("\nTOCADO!\n\n");
         player->casillas_tocadas++;
         break;
     case 2:
-        printf("\nHUNDIDO!!!\n\n");
+        printf("\nHUNDIDO!\n\n");
         player->casillas_tocadas++;
         player->barcos_hundidos++;
         break;
@@ -131,11 +131,11 @@ int disparo_automatico(char tablero[][N], char tablero_v[][N], jugador *player)
     switch (resultado)
     {
     case 1:
-        printf("\nTocado!\n\n");
+        printf("\nTOCADO!\n\n");
         player->casillas_tocadas++;
         break;
     case 2:
-        printf("\nHUNDIDO!!!\n\n");
+        printf("\nHUNDIDO!\n\n");
         player->casillas_tocadas++;
         player->barcos_hundidos++;
         break;
