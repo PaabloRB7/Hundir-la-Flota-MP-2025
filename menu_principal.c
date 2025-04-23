@@ -6,6 +6,7 @@
 #include "barcos.h"
 #include "disparos.h"
 #include "configuracion.h"
+#include "cargadescarga.h"
 
 #define TAM 10
 #define NUM_BARCOS 4
@@ -94,7 +95,8 @@ void introducir_datos(jugador *j1, jugador *j2, char flota_jug1[][TAM], char opo
 
 void mostrar(jugador *j1, jugador *j2, char flota_jug1[][TAM], char oponente_jug1[][TAM], char flota_jug2[][TAM], char oponente_jug2[][TAM], barco barcos_jug1[], barco barcos_jug2[]){
     mostrar_barcos();
-    mostrar_configuracion(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
+    mostrar_jugador();
+    //mostrar_configuracion(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
     configuracion(j1, j2, flota_jug1, oponente_jug1, flota_jug2, oponente_jug2, barcos_jug1, barcos_jug2);
     
 
@@ -314,7 +316,7 @@ void imprimirFilaJugador(const char* nombreJugador, int disparos, int vacias, in
 
 void mostrar_barcos() {
     barco barcos[4];
-    descargar_barcos(barcos, 4); // Cargar los barcos desde el archivo
+    //cargar_barcos(barcos, 4); // Cargar los barcos desde el archivo
     printf("Barcos disponibles:\n");
     for (int i = 0; i < NUM_BARCOS; i++) {
         printf("%s - %d - %c\n", barcos[i].nombre, barcos[i].longitud, barcos[i].tipo);
@@ -328,10 +330,10 @@ void mostrar_jugador(){
         printf("Error al abrir config.txt para cargar.\n");
         return;
     }
-    cargar_jugador(j, f);
+    //cargar_jugador(j, f);
     
-    for (int i = 0; i < 2; i++) {
-        fprintf("%s-%d-%c-%d\n", j[i].nombre, j[i].disparos_realizados, j[i].disparo, j[i].ganador);
-    }
+    //for (int i = 0; i < 2; i++) {
+    //    fprintf("%s-%d-%c-%d\n", j[i].nombre, j[i].disparos_realizados, j[i].disparo, j[i].ganador);
+    //}
     fclose(f);
 }

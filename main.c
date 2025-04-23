@@ -42,7 +42,7 @@ int main(){
     // inicializacion
     strcpy(jugador1.nombre,"Jugador1");
     jugador1.disparos_realizados = 0;
-    jugador1.disparo = 'M';
+    jugador1.disparo = 'A';
     jugador1.disparos_agua = 0;
     jugador1.casillas_tocadas = 0;
     jugador1.casillas_hundidas = 0;
@@ -50,7 +50,7 @@ int main(){
     jugador1.ganador = 0;
 
     strcpy(jugador2.nombre,"Jugador2");
-    jugador2.disparo = 'M';
+    jugador2.disparo = 'A';
     jugador2.disparos_realizados = 0;
     jugador2.disparos_agua = 0;
     jugador2.casillas_tocadas = 0;

@@ -100,5 +100,7 @@ void imprimirCabeceraTabla();
 // Precondición: Los datos del jugador deben estar inicializados.
 // Postcondición: Se imprime una fila con las estadísticas del jugador.
 void imprimirFilaJugador(const char* nombreJugador, int disparos, int vacias, int agua, int tocadas, int hundidasCasillas, int hundidosBarcos, int restanBarcos, int esGanador);
+void mostrar_barcos();
+void mostrar_jugador();
 
 #endif

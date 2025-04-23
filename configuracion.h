@@ -15,33 +15,24 @@ typedef struct{
 
 }jugador;
 
-// Cabecera: Configura los parámetros iniciales del juego.
-// Precondición: Ninguna.
-// Postcondición: Se establecen los parámetros iniciales del juego.
-void config();
 
 // Cabecera: Permite introducir datos en el sistema.
 // Precondición: Ninguna.
 // Postcondición: Los datos introducidos se almacenan correctamente.
-void introducir_datos();
-
-// Cabecera: Muestra los datos almacenados en el sistema.
-// Precondición: Deben existir datos almacenados previamente.
-// Postcondición: Se imprimen los datos en pantalla.
-void mostrar();
+void introducir_datos_config();
 
 // Cabecera: Borra datos almacenados en el sistema.
 // Precondición: Deben existir datos almacenados previamente.
 // Postcondición: Los datos seleccionados se eliminan o restablecen.
-void borrar();
+void borrar_config();
 
 // Cabecera: Guarda los datos actuales en un archivo.
 // Precondición: Deben existir datos para guardar.
 // Postcondición: Los datos se almacenan en un archivo correctamente.
-void guardar();
+//void guardar_config();
 
 // Cabecera: Carga datos desde un archivo al sistema.
 // Precondición: El archivo debe existir y contener datos válidos.
 // Postcondición: Los datos se cargan en el sistema correctamente.
-void cargar();
+//void cargar_config();
 #endif

@@ -9,7 +9,7 @@ void guardar_barcos(barco [], int);
 
 void guardar_jugador(jugador *, FILE *);
 
-void cargar_jugador(jugador *, FILE *)
+void cargar_jugador(jugador *, FILE *);
 
 
 

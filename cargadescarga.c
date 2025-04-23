@@ -75,5 +75,3 @@ void cargar_jugador(jugador j[], FILE *f) {
     printf("Jugadores cargados correctamente.\n");
 }
     
-
-

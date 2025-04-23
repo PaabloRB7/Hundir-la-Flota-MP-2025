@@ -1,5 +1,5 @@
-#ifndef barcos
-#define barcos
+#ifndef barcos_h
+#define barcos_h
 
 #define TAM 10
 
