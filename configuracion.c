@@ -4,6 +4,8 @@
 #include "barcos.h"
 #include "disparos.h"
 #include "configuracion.h"
+#include "cargadescarga.h"
+#include <stdlib.h>
 
 //Funciones
 void config() {
@@ -32,66 +34,64 @@ void config() {
 
 void introducir_datos(){
     FILE *f;
-    int n, num_barcos, tiposbarcos[4], primerturno, bucle, respuesta; //tipos de barcos 0 = S, 1 = F, 2 = C, 3 = A y 4 = P
-    jugador j1, j2;
+    int n, num_barcos, tiposbarcos[4], primerturno, bucle, respuesta, iter; //tipos de barcos 0 = S, 1 = F, 2 = C, 3 = A y 4 = P
+    jugador j[2];
+    barco barcos[4];
 
     if ((f = fopen("config.txt", "w")) != NULL) {
             printf("Error al abrir el archivo.\n");
             return;
         }
     else {
-        printf("\nIntroduzca el nombre del jugador 1: ");
-        fflush(stdin);
-        fgets(j1.nombre, sizeof(j1.nombre), stdin);
-        bucle = 1;
-        while(bucle = 1){
-            printf("\nEl tipo de disparo del jugador 1 es manual? (s/n): ");
+        for(iter = 0; iter < 2; iter++){
+            printf("\nIntroduzca el nombre del jugador %i: ", iter+1);
             fflush(stdin);
-            scanf("%c", &respuesta);
-            if(respuesta == 's' || respuesta == 'n'){
-                bucle = 0;
-                if(respuesta == 's')
-                    j1.disparo = 'M';
-                else
-                    j1.disparo = 'A';
-            }
-            else{
-                printf("\nOpcion no valida\n");
-                bucle = 1;
-            }
+            fgets(j[iter].nombre, sizeof(j[iter].nombre), stdin);
+            bucle = 1;
+            while(bucle = 1){
+                printf("\nEl tipo de disparo del jugador %i es manual? (s/n): ", iter+1);
+                fflush(stdin);
+                scanf("%c", &respuesta);
+                if(respuesta == 's' || respuesta == 'n'){
+                    bucle = 0;
+                    if(respuesta == 's')
+                        j[iter].disparo = 'M';
+                    else
+                        j[iter].disparo = 'A';
+                }
+                else{
+                    printf("\nOpcion no valida\n");
+                    bucle = 1;
+                }
         }
-        printf("\nIntroduzca el nombre del jugador 2: ");
-        fflush(stdin);
-        fgets(j2.nombre, sizeof(j2.nombre), stdin);
-        bucle = 1;
-        while(bucle = 1){
-            printf("\nEl tipo de disparo del jugador 2 es manual? (s/n): ");
-            fflush(stdin);
-            scanf("%c", &respuesta);
-            if(respuesta == 's' || respuesta == 'n'){
-                bucle = 0;
-                if(respuesta == 's')
-                    j2.disparo = 'M';
-                else
-                    j2.disparo = 'A';
-            }
-            else{
+
+        guardar_jugador(j, f);
+
+        printf("\nIntroduzca el tamaño del barco a usar ");
+        for(bucle i = 0; i < 4; i++){
+            printf("Barco %d: ", i+1);
+            scanf("%d", &barcos[i].longitud);
+            if(tiposbarcos[i] < 1 || tiposbarcos[i] > 5){
                 printf("\nOpcion no valida\n");
-                bucle = 1;
+                i--;
+            }
+            fflush(stdin);
+            switch(i){
+                case 1: strcpy(barcos[i].nombre, "Submarino"); break;
+                case 2: strcpy(barcos[i].nombre, "Fragata"); break;
+                case 3: strcpy(barcos[i].nombre, "Crucero"); break;
+                case 4: strcpy(barcos[i].nombre, "Acorazado"); break;
+            }
+            switch(tiposbarcos[i]){
+                case 1: barcos[i].tipo = 'S'; break;
+                case 2: barcos[i].tipo = 'F'; break;
+                case 3: barcos[i].tipo = 'C'; break;
+                case 4: barcos[i].tipo = 'A'; break;
+
             }
         }
 
-        printf("\nSubmarinos que habra en la partida: ");
-        scanf("%d", &tiposbarcos[0]);
-        printf("\nFragatas que habra en la partida: ");
-        scanf("%d", &tiposbarcos[1]);
-        printf("\nCruceros que habra en la partida: ");
-        scanf("%d", &tiposbarcos[2]);
-        printf("\nAcorazados que habra en la partida: ");
-        scanf("%d", &tiposbarcos[3]);
-        printf("\nPortaaviones que habra en la partida: ");
-        scanf("%d", &tiposbarcos[4]);
-        num_barcos = tiposbarcos[0] + tiposbarcos[1] + tiposbarcos[2] + tiposbarcos[3] + tiposbarcos[4];
+        cargar_barcos(barcos, 4);
 
         printf("\nIntroduzca el numero del jugador que comenzara la partida (1/2): ");
         scanf("%d", &primerturno);
@@ -99,8 +99,7 @@ void introducir_datos(){
         //Guardar en fichero
         fprintf("%s %s %s %s \n", j1.nombre, j1.disparo, j2.nombre, j2.disparo);
         fprintf("%d %d %d %d %d %d\n", tiposbarcos[0], tiposbarcos[1], tiposbarcos[2], tiposbarcos[3], tiposbarcos[4], num_barcos);
-        fprintf("%d", primerturno);
-
+        fprintf("%d", primerturno)
     }
 
 fclose(f);
@@ -199,3 +198,5 @@ void cargar() {
     printf("Partida cargada correctamente.\n");
 }
 
+
+}
