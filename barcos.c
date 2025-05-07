@@ -5,7 +5,7 @@
 
 
 #define TAM 10
-#define NUM_BARCOS 4
+#define NUM_BARCOS 3
 
 void inicializar_barcos(barco test[]){ //barcos de ejemplo
     strcpy(test[0].nombre, "Submarino");
@@ -28,6 +28,7 @@ void inicializar_barcos(barco test[]){ //barcos de ejemplo
     test[2].eje_y = 0;
     test[2].eje_x = 0;
     test[2].orientacion = '\0';
+    /*
 
     strcpy(test[3].nombre,"Acorazado");
     test[3].longitud = 4;
@@ -35,7 +36,7 @@ void inicializar_barcos(barco test[]){ //barcos de ejemplo
     test[3].eje_y = 0;
     test[3].eje_x = 0;
     test[3].orientacion = '\0';
-/*
+
     strcpy(test[4].nombre,"Portaaviones");
     test[4].longitud = 5;
     test[4].tipo = 'P';
@@ -104,10 +105,10 @@ int comprobar_casillas(char tablero[][TAM],int ejey,int ejex, barco barco[], int
 
     return 0;
 }
-
+/*
 void colocar_barcos(char tablero[][TAM], barco test[]){
 
-    int i;
+    int i=0;
     
     
     for(i=0;i<NUM_BARCOS;i++){
@@ -126,6 +127,38 @@ void colocar_barcos(char tablero[][TAM], barco test[]){
             } while (test[i].orientacion !='H' && test[i].orientacion !='V' && test[i].orientacion !='D' && test[i].orientacion !='I');
 
             direccionar_barcos(test,i,tablero);
+        }
+    }
+}
+*/
+void colocar_barcos(char tablero[][TAM], barco test[]) {
+    for (int i = 0; i < NUM_BARCOS; i++) {
+        int valido = 0;
+        while (!valido) {
+            printf("Indica la posicion inicial del barco %i, %s (Longitud: %i) [Eje Y][Eje X]\n", i + 1, test[i].nombre, test[i].longitud);
+            scanf("%i %i", &test[i].eje_y, &test[i].eje_x);
+
+            if (test[i].longitud == 1) {
+                if (comprobar_casillas(tablero, test[i].eje_y, test[i].eje_x, test, i) == 0) {
+                    tablero[test[i].eje_y][test[i].eje_x] = 'X';
+                    imprimirTablero(tablero);
+                    valido = 1;
+                } else {
+                    printf("No es posible colocar el barco en esa posicion\n");
+                }
+            } else {
+                printf("Indica la orientacion del barco %i, %s:\n[H: Horizontal, V: Vertical, D: Diagonal derecha, I: Diagonal izquierda]  ", i + 1, test[i].nombre);
+                do {
+                    scanf(" %c", &test[i].orientacion);
+                } while (test[i].orientacion != 'H' && test[i].orientacion != 'V' && test[i].orientacion != 'D' && test[i].orientacion != 'I');
+
+                if (comprobar_casillas(tablero, test[i].eje_y, test[i].eje_x, test, i) == 0) {
+                    direccionar_barcos(test, i, tablero);
+                    valido = 1;
+                } else {
+                    printf("No es posible colocar el barco en esa posicion\n");
+                }
+            }
         }
     }
 }
@@ -182,6 +215,7 @@ void colocar_horizontal(barco test[],int num_barco,char tablero[][TAM]){
             inicializar_espacio(tablero);
             imprimirTablero(tablero);
             colocar_barcos(tablero,test);
+            break;
         }
         tablero[test[num_barco].eje_y][test[num_barco].eje_x+i]='X';
     }
@@ -197,6 +231,7 @@ void colocar_vertical(barco test[],int num_barco,char tablero[][TAM]) {
             inicializar_espacio(tablero);
             imprimirTablero(tablero);
             colocar_barcos(tablero, test);
+            break;
         }
         tablero[test[num_barco].eje_y + i][test[num_barco].eje_x] = 'X';
     }
@@ -213,6 +248,7 @@ void colocar_diagonal_der(barco test[],int num_barco,char tablero[][TAM]) {
             inicializar_espacio(tablero);
             imprimirTablero(tablero);
             colocar_barcos(tablero,test);
+            break;
         }
         tablero[test[num_barco].eje_y-i][test[num_barco].eje_x+i]='X';
     }
@@ -229,6 +265,7 @@ void colocar_diagonal_izq(barco test[],int num_barco,char tablero[][TAM]) {
             inicializar_espacio(tablero);
             imprimirTablero(tablero);
             colocar_barcos(tablero, test);
+            break;
         }
         tablero[test[num_barco].eje_y - i][test[num_barco].eje_x - i] = 'X';
     }

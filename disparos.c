@@ -8,7 +8,7 @@
 #include "configuracion.h"
 
 #define N 10
-#define NUM_BARCOS 4
+#define NUM_BARCOS 3
 
 // Funciones
 int disparo(int fila, int columna, char tablero[][N], char tablero_v[][N]) //tablero: tablero barcos personales, tablero_v: tablero

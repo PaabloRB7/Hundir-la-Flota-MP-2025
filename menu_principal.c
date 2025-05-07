@@ -9,7 +9,7 @@
 #include "cargadescarga.h"
 
 #define TAM 10
-#define NUM_BARCOS 4
+#define NUM_BARCOS 3
 
 void menu_intro(){
     printf("Bienvenido a Hundir la flota\n");

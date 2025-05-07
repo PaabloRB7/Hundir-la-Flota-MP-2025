@@ -9,7 +9,7 @@
 #include "configuracion.h"
 
 #define TAM 10
-#define NUM_BARCOS 4
+#define NUM_BARCOS 3
 
 
 
@@ -42,7 +42,7 @@ int main(){
     // inicializacion
     strcpy(jugador1.nombre,"Jugador1");
     jugador1.disparos_realizados = 0;
-    jugador1.disparo = 'A';
+    jugador1.disparo = 'M';
     jugador1.disparos_agua = 0;
     jugador1.casillas_tocadas = 0;
     jugador1.casillas_hundidas = 0;

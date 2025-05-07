@@ -8,8 +8,6 @@ include_directories(.)
 add_executable(Hundir_la_Flota_MP_2025
     barcos.c
     barcos.h
-    #configuracion.c
-    #configuracion.h
     disparos.c
     disparos.h
     main.c
@@ -17,5 +15,3 @@ add_executable(Hundir_la_Flota_MP_2025
     menu_principal.h
     tablero.c
     tablero.h)
-    #cargadescarga.c
-    #cargadescarga.h)
